@@ -16,19 +16,20 @@ describe('Single Field Transformations', () => {
   });
 
   test('Combine Multiple By Key', () => {
-    const { students: mainEntity, courses: joinEntity } = input;
+    const { students: mainEntity, subscriptions: joinEntity } = input;
 
     const result = transformationService.combineMultipleByKey(
       mainEntity,
       'Id',
       joinEntity,
       'StudentId',
+      'Subscriptions',
       {
         PaymentDate: 'Date',
         PlanType: 'Type',
       }
     );
 
-    expect(result).toEqual(combinedCourse);
+    expect(result).toEqual(combinedSubscriptions);
   });
 });
