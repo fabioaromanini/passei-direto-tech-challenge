@@ -21,22 +21,27 @@ function indexMultipleJoinEntityByKey(joinEntity, joinEntityKey) {
   return joinEntityByKey;
 }
 
+function parseEntryFields(originalEntry, fieldNamesMapping) {
+  const parsedEntity = {};
+  Object.keys(originalEntry).forEach(originalField => {
+    const newFieldName = fieldNamesMapping[originalField];
+    if (newFieldName) {
+      parsedEntity[newFieldName] = originalEntry[originalField];
+    }
+  });
+  return parsedEntity;
+}
+
 function combineByKey(mainEntity, mainEntityKey, joinEntity, joinEntityKey, fieldNamesMapping) {
   const joinEntityByKey = indexJoinEntityByKey(joinEntity, joinEntityKey);
 
-  return mainEntity.map(entry => {
-    const key = entry[mainEntityKey];
-    const joinEntry = joinEntityByKey[key];
-
-    const result = { ...entry };
-    Object.keys(joinEntry).forEach(originalField => {
-      const newFieldName = fieldNamesMapping[originalField];
-      if (newFieldName) {
-        result[newFieldName] = joinEntry[originalField];
-      }
-    });
-
-    return result;
+  return mainEntity.map(mainEntry => {
+    const joinKey = mainEntry[mainEntityKey];
+    const joinEntry = joinEntityByKey[joinKey];
+    return {
+      ...mainEntry,
+      ...parseEntryFields(joinEntry, fieldNamesMapping),
+    };
   });
 }
 
@@ -54,20 +59,10 @@ function combineMultipleByKey(
     const key = entry[mainEntityKey];
     const joinEntries = joinEntityByKey[key];
 
-    const result = { ...entry };
-
-    result[joinFieldName] = joinEntries.map(joinEntry => {
-      const joinEntryResult = {};
-      Object.keys(joinEntry).forEach(originalField => {
-        const newFieldName = fieldNamesMapping[originalField];
-        if (newFieldName) {
-          joinEntryResult[newFieldName] = joinEntry[originalField];
-        }
-      });
-      return joinEntryResult;
-    });
-
-    return result;
+    return {
+      ...entry,
+      [joinFieldName]: joinEntries.map(joinEntry => parseEntryFields(joinEntry, fieldNamesMapping)),
+    };
   });
 }
 
