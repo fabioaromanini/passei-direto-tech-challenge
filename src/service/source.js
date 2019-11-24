@@ -1,4 +1,6 @@
-const sourceData = [
+const s3Connector = require('../connector/s3');
+
+const sourceEntities = [
   'courses',
   'sessions',
   'student_follow_subject',
@@ -9,7 +11,7 @@ const sourceData = [
 ];
 
 async function extract() {
-  sourceData.forEach(sourceDataName => console.log(sourceDataName));
+  sourceEntities.forEach(sourceEntityName => s3Connector.extractEntity(sourceEntityName));
 }
 
 exports.extract = extract;

@@ -7,6 +7,11 @@ provider:
   runtime: nodejs12.x
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'us-east-1'}
+  environment:
+    SOURCE_NAME: ${self:custom.sourceName}
+
+custom:
+  sourceName: ${env:SOURCE_NAME, 'raw.challenge.data'}
 
 functions:
   extractTransform:
