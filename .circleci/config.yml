@@ -15,18 +15,16 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: npm test
-      - persist_to_workspace:
-          root: ~/passei-direto-tech-challenge
-          paths:
-            - node_modules
 
   deploy:
     docker:
       - image: circleci/node:12.13
     steps:
-      - attach_workspace:
-          at: ~/passei-direto-tech-challenge
-      - run: ls
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
       - run: npm run deploy
 
 workflows:
