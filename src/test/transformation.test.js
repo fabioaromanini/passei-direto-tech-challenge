@@ -3,6 +3,7 @@ const transformationService = require('../service/transformation');
 const input = require('./data/inputs/transformationService.json');
 const joinedCourse = require('./data/outputs/joinedCourse.json');
 const joinedSubscriptions = require('./data/outputs/joinedSubscriptions.json');
+const parsedSubscription = require('./data/outputs/parsedSubscription.json');
 
 describe('Joins', () => {
   test('Join By Key', () => {
@@ -32,4 +33,13 @@ describe('Joins', () => {
 
     expect(result).toEqual(joinedSubscriptions);
   });
+});
+
+test('Parse', () => {
+  const result = transformationService.parse(input.subscriptions, {
+    PlanType: 'Type',
+    PaymentDate: 'Date',
+  });
+
+  expect(result).toEqual(parsedSubscription);
 });
