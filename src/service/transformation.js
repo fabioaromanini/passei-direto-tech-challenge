@@ -32,6 +32,17 @@ function parseEntryFields(originalEntry, fieldNamesMapping) {
   return parsedEntry;
 }
 
+function parse(originalEntity, fieldNamesMapping) {
+  return originalEntity.map(originalEntry => {
+    const parsedEntry = {};
+    Object.keys(originalEntry).forEach(originalField => {
+      const newFieldName = fieldNamesMapping[originalField];
+      parsedEntry[newFieldName || originalField] = originalEntry[originalField];
+    });
+    return parsedEntry;
+  });
+}
+
 function joinByKey(mainEntity, mainEntityKey, joinEntity, joinEntityKey, fieldNamesMapping) {
   const joinEntityByKey = indexEntityByKey(joinEntity, joinEntityKey);
 
@@ -68,3 +79,4 @@ function joinMultipleByKey(
 
 exports.joinByKey = joinByKey;
 exports.joinMultipleByKey = joinMultipleByKey;
+exports.parse = parse;
