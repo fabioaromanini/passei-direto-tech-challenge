@@ -1,24 +1,24 @@
 const transformationService = require('../service/transformation');
 
 const input = require('./data/inputs/transformationService.json');
-const combinedCourse = require('./data/outputs/combinedCourse.json');
-const combinedSubscriptions = require('./data/outputs/combinedSubscriptions.json');
+const joinedCourse = require('./data/outputs/joinedCourse.json');
+const joinedSubscriptions = require('./data/outputs/joinedSubscriptions.json');
 
-describe('Single Field Transformations', () => {
-  test('Combine By Key', () => {
+describe('Joins', () => {
+  test('Join By Key', () => {
     const { students: mainEntity, courses: joinEntity } = input;
 
-    const result = transformationService.combineByKey(mainEntity, 'CourseId', joinEntity, 'Id', {
+    const result = transformationService.joinByKey(mainEntity, 'CourseId', joinEntity, 'Id', {
       Name: 'CourseName',
     });
 
-    expect(result).toEqual(combinedCourse);
+    expect(result).toEqual(joinedCourse);
   });
 
-  test('Combine Multiple By Key', () => {
+  test('Join Multiple By Key', () => {
     const { students: mainEntity, subscriptions: joinEntity } = input;
 
-    const result = transformationService.combineMultipleByKey(
+    const result = transformationService.joinMultipleByKey(
       mainEntity,
       'Id',
       joinEntity,
@@ -30,6 +30,6 @@ describe('Single Field Transformations', () => {
       }
     );
 
-    expect(result).toEqual(combinedSubscriptions);
+    expect(result).toEqual(joinedSubscriptions);
   });
 });
