@@ -9,6 +9,7 @@
     "test": "exit 0"
   },
   "devDependencies": {
+    "jest": "^24.9.0",
     "serverless": "^1.58.0"
   },
   "dependencies": {
