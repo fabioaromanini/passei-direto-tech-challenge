@@ -14,7 +14,10 @@ async function extract() {
   const entities = await Promise.all(
     sourceEntities.map(sourceEntityName => s3Connector.extractEntity(sourceEntityName))
   );
-  entities.forEach(entity => console.log(entity.name));
+
+  const mappedEntities = {};
+  entities.forEach(entity => (mappedEntities[entity.name] = entity.data));
+  return mappedEntities;
 }
 
 exports.extract = extract;
