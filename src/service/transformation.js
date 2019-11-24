@@ -45,25 +45,20 @@ function joinByKey(mainEntity, mainEntityKey, joinEntity, joinEntityKey) {
   });
 }
 
-function joinMultipleByKey(
-  mainEntity,
-  mainEntityKey,
-  joinEntity,
-  joinEntityKey,
-  joinFieldName,
-  fieldNamesMapping
-) {
+function joinMultipleByKey(mainEntity, mainEntityKey, joinEntity, joinEntityKey, joinFieldName) {
   const joinEntityByKey = indexMultipleEntityByKey(joinEntity, joinEntityKey);
 
   return mainEntity.map(entry => {
     const key = entry[mainEntityKey];
 
+    const joinEntriesWithoutKey = joinEntityByKey[key].map(joinEntry => {
+      const { [joinEntityKey]: ignoredKey, ...joinEntryWithoutKey } = joinEntry;
+      return joinEntryWithoutKey;
+    });
+
     return {
       ...entry,
-      [joinFieldName]: joinEntityByKey[key].map(joinEntry => {
-        const { [joinEntityKey]: ignoredKey, ...joinEntryWithoutKey } = joinEntry;
-        return joinEntryWithoutKey;
-      }),
+      [joinFieldName]: joinEntriesWithoutKey,
     };
   });
 }
