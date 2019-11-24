@@ -9,6 +9,16 @@ provider:
   region: ${opt:region, 'us-east-1'}
   environment:
     SOURCE_NAME: ${self:custom.sourceName}
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - 's3:GetObject'
+      Resource:
+        Fn::Join:
+          - ''
+          - - 'arn:aws:s3:::'
+            - ${self:custom.sourceName}
+            - '/*'
 
 custom:
   sourceName: ${env:SOURCE_NAME, 'raw.challenge.data'}
