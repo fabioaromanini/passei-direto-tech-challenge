@@ -6,29 +6,36 @@ const joinedSubscriptions = require('./data/outputs/joinedSubscriptions.json');
 const parsedSubscription = require('./data/outputs/parsedSubscription.json');
 
 describe('Joins', () => {
-  test('Join By Key', () => {
-    const { students: mainEntity, courses: joinEntity } = input;
+  beforeAll(() => {
+    const { courses, subscriptions } = input;
 
-    const result = transformationService.joinByKey(mainEntity, 'CourseId', joinEntity, 'Id', {
+    input.parsedCourse = transformationService.parse(courses, {
       Name: 'CourseName',
     });
+
+    input.parsedSubscription = transformationService.parse(subscriptions, {
+      PaymentDate: 'Date',
+      PlanType: 'Type',
+    });
+  });
+
+  test('Join By Key', () => {
+    const { students: mainEntity, parsedCourse: joinEntity } = input;
+
+    const result = transformationService.joinByKey(mainEntity, 'CourseId', joinEntity, 'Id');
 
     expect(result).toEqual(joinedCourse);
   });
 
   test('Join Multiple By Key', () => {
-    const { students: mainEntity, subscriptions: joinEntity } = input;
+    const { students: mainEntity, parsedSubscription: joinEntity } = input;
 
     const result = transformationService.joinMultipleByKey(
       mainEntity,
       'Id',
       joinEntity,
       'StudentId',
-      'Subscriptions',
-      {
-        PaymentDate: 'Date',
-        PlanType: 'Type',
-      }
+      'Subscriptions'
     );
 
     expect(result).toEqual(joinedSubscriptions);
