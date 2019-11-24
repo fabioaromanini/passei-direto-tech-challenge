@@ -1,6 +1,6 @@
 # Passei Direto Tech Challenge
 
-[![CircleCI](https://circleci.com/gh/fabioaromanini/passei-direto-tech-challenge.svg?style=svg)](https://circleci.com/gh/fabioaromanini/passei-direto-tech-challenge)
+[![CircleCI](https://circleci.com/gh/fabioaromanini/passei-direto-tech-challenge.svg?style=svg&circle-token=fe0b0cf773d6dbacbf1f77c427c31ae1f1c0f19f)](https://circleci.com/gh/fabioaromanini/passei-direto-tech-challenge)
 
 Code for Passei Direto Tech Challenge.
 
