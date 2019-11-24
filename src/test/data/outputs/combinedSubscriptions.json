@@ -1,0 +1,40 @@
+[
+  {
+    "Id": "1",
+    "RegisteredDate": "2019-01-01 11:00:00.000",
+    "State": "Rio de Janeiro",
+    "City": "Rio de Janeiro",
+    "UniversityId": 1,
+    "CourseId": 1,
+    "SignupSource": "Facebook",
+    "Subscriptions": [
+      {
+        "PaymentDate": "2019-01-01 12:00:00.000",
+        "PlanType": "Mensal"
+      },
+      {
+        "PaymentDate": "2019-02-01 12:00:00.000",
+        "PlanType": "Mensal"
+      }
+    ]
+  },
+  {
+    "Id": "2",
+    "RegisteredDate": "2019-01-02 11:00:00.000",
+    "State": "Rio de Janeiro",
+    "City": "Rio de Janeiro",
+    "UniversityId": 2,
+    "CourseId": 2,
+    "SignupSource": "Google",
+    "Subscriptions": [
+      {
+        "PaymentDate": "2019-01-02 12:00:00.000",
+        "PlanType": "Anual"
+      },
+      {
+        "PaymentDate": "2020-01-02 12:00:00.000",
+        "PlanType": "Anual"
+      }
+    ]
+  }
+]
