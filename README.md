@@ -1,5 +1,7 @@
 # Passei Direto Tech Challenge
 
+[![CircleCI](https://circleci.com/gh/fabioaromanini/passei-direto-tech-challenge.svg?style=svg&circle-token=fe0b0cf773d6dbacbf1f77c427c31ae1f1c0f19f)](https://circleci.com/gh/fabioaromanini/passei-direto-tech-challenge)
+
 Code for Passei Direto Tech Challenge.
 
 ## Step 1: Data Wrangling
@@ -15,4 +17,4 @@ It consists of a serverless ETL which reads data from s3, apply a few transforma
 ## Deploy
 
 1. `npm install`
-1. `npm run deploy`
+2. `npm run deploy`
