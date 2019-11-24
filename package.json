@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "deploy": "sls deploy -v",
-    "test": "exit 0"
+    "test": "jest --coverage"
   },
   "devDependencies": {
     "jest": "^24.9.0",
