@@ -1,0 +1,22 @@
+[
+  {
+    "Id": "1",
+    "RegisteredDate": "2019-01-01 11:00:00.000",
+    "State": "Rio de Janeiro",
+    "City": "Rio de Janeiro",
+    "UniversityId": 1,
+    "CourseId": 1,
+    "CourseName": "Course 1",
+    "SignupSource": "Facebook"
+  },
+  {
+    "Id": "2",
+    "RegisteredDate": "2019-01-02 11:00:00.000",
+    "State": "Rio de Janeiro",
+    "City": "Rio de Janeiro",
+    "UniversityId": 2,
+    "CourseId": 2,
+    "CourseName": "Course 2",
+    "SignupSource": "Google"
+  }
+]
