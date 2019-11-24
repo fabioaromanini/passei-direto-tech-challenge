@@ -1,0 +1,10 @@
+{
+  "name": "passei-direto",
+  "version": "0.0.1",
+  "description": "Serverless ETL",
+  "author": "fabioaromanini",
+  "license": "MIT",
+  "scripts": {
+    "deploy": "sls deploy -v"
+  }
+}
