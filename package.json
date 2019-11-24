@@ -5,6 +5,7 @@
   "author": "fabioaromanini",
   "license": "MIT",
   "scripts": {
-    "deploy": "sls deploy -v"
+    "deploy": "sls deploy -v",
+    "test": "exit 0"
   }
 }
