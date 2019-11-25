@@ -12,11 +12,6 @@ describe('Joins', () => {
     input.parsedCourse = transformationService.parse(courses, {
       Name: 'CourseName',
     });
-
-    input.parsedSubscription = transformationService.parse(subscriptions, {
-      PaymentDate: 'Date',
-      PlanType: 'Type',
-    });
   });
 
   test('Join By Key', () => {
@@ -26,27 +21,15 @@ describe('Joins', () => {
 
     expect(result).toEqual(joinedCourse);
   });
-
-  test('Join Multiple By Key', () => {
-    const { students: mainEntity, parsedSubscription: joinEntity } = input;
-
-    const result = transformationService.joinMultipleByKey(
-      mainEntity,
-      'Id',
-      joinEntity,
-      'StudentId',
-      'Subscriptions'
-    );
-
-    expect(result).toEqual(joinedSubscriptions);
-  });
 });
 
-test('Parse', () => {
-  const result = transformationService.parse(input.subscriptions, {
-    PlanType: 'Type',
-    PaymentDate: 'Date',
-  });
+describe('Joins', () => {
+  test('Parse', () => {
+    const result = transformationService.parse(input.subscriptions, {
+      PlanType: 'Type',
+      PaymentDate: 'Date',
+    });
 
-  expect(result).toEqual(parsedSubscription);
+    expect(result).toEqual(parsedSubscription);
+  });
 });
