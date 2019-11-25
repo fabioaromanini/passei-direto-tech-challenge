@@ -1,6 +1,13 @@
 const transformationService = require('../service/transformation');
 
-const input = require('./data/inputs/transformationService.json');
+const subjects = require('./data/inputs/subjects.json');
+const student_follow_subject = require('./data/inputs/student_follow_subject.json');
+const students = require('./data/inputs/students.json');
+const universities = require('./data/inputs/universities.json');
+const courses = require('./data/inputs/courses.json');
+const sessions = require('./data/inputs/sessions.json');
+const subscriptions = require('./data/inputs/subscriptions.json');
+
 const denormalizedStudents = require('./data/outputs/denormalizedStudents.json');
 const denormalizedFollows = require('./data/outputs/denormalizedFollows.json');
 const joinedCourse = require('./data/outputs/joinedCourse.json');
@@ -10,44 +17,36 @@ const parsedSessions = require('./data/outputs/parsedSessions.json');
 
 describe('Joins', () => {
   test('Join By Key', () => {
-    const { student_follow_subject: mainEntity, subjects: joinEntity } = input;
-
-    const result = transformationService.joinByKey(mainEntity, 'SubjectId', joinEntity, 'Id');
-
-    expect(result).toEqual(joinedFollows);
+    expect(
+      transformationService.joinByKey(student_follow_subject, 'SubjectId', subjects, 'Id')
+    ).toEqual(joinedFollows);
   });
 
   test('Join By Key With Missing Join Entry', () => {
-    const { students: mainEntity, courses: joinEntity } = input;
-
-    const result = transformationService.joinByKey(mainEntity, 'CourseId', joinEntity, 'Id');
-
-    expect(result).toEqual(joinedCourse);
+    expect(transformationService.joinByKey(students, 'CourseId', courses, 'Id')).toEqual(
+      joinedCourse
+    );
   });
 });
 
 describe('Transformations', () => {
   test('Denormalize students', () => {
-    const { students, courses, universities } = input;
-    const result = transformationService.denormalizeStudents(students, courses, universities);
-    expect(result).toEqual(denormalizedStudents);
+    expect(transformationService.denormalizeStudents(students, courses, universities)).toEqual(
+      denormalizedStudents
+    );
   });
 
   test('Denormalize Follows', () => {
-    const { student_follow_subject: follow, subjects } = input;
-    const result = transformationService.denormalizeFollows(follow, subjects);
-    expect(result).toEqual(denormalizedFollows);
+    expect(transformationService.denormalizeFollows(student_follow_subject, subjects)).toEqual(
+      denormalizedFollows
+    );
   });
 
   test('Parse Subscriptions', () => {
-    const { subscriptions } = input;
-    const result = transformationService.parseSubscriptions(subscriptions);
-    expect(result).toEqual(parsedSubscriptions);
+    expect(transformationService.parseSubscriptions(subscriptions)).toEqual(parsedSubscriptions);
   });
 
   test('Parse Sessions', () => {
-    const { sessions } = input;
-    const result = transformationService.parseSessions(sessions);
-    expect(result).toEqual(parsedSessions);
+    expect(transformationService.parseSessions(sessions)).toEqual(parsedSessions);
   });
 });

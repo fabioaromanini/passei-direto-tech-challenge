@@ -1,0 +1,22 @@
+[
+  {
+    "StudentId": "1",
+    "PaymentDate": "2019-01-01 12:00:00.000",
+    "PlanType": "Mensal"
+  },
+  {
+    "StudentId": "1",
+    "PaymentDate": "2019-02-01 12:00:00.000",
+    "PlanType": "Mensal"
+  },
+  {
+    "StudentId": "2",
+    "PaymentDate": "2019-01-02 12:00:00.000",
+    "PlanType": "Anual"
+  },
+  {
+    "StudentId": "2",
+    "PaymentDate": "2020-01-02 12:00:00.000",
+    "PlanType": "Anual"
+  }
+]
