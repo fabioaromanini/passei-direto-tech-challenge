@@ -20,6 +20,10 @@ provider:
             - ${self:custom.sourceName}
             - '/*'
 
+package:
+  exclude:
+    - test
+
 custom:
   sourceName: ${env:SOURCE_NAME, 'raw.challenge.data'}
 
