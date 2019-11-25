@@ -18,7 +18,7 @@ function loadEntity(entityName, data) {
   const params = {
     Body: data,
     Bucket: DATAWAREHOUSE_NAME,
-    Key: `a/${entityName}/${new Date()}.json`,
+    Key: `a/${entityName}/${new Date().toISOString()}.json`,
   };
 
   return client.putObject(params).promise();
