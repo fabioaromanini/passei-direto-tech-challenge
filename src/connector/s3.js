@@ -1,6 +1,6 @@
 const AWS = require('aws-sdk');
 
-const { DATA_SOURCE_BUCKET_NAME, DATAWAREHOUSE_NAME } = process.env;
+const { DATA_SOURCE_BUCKET_NAME, DATA_WAREHOUSE_BUCKET_NAME } = process.env;
 
 const client = new AWS.S3();
 
@@ -17,7 +17,7 @@ async function extractEntity(entityName) {
 function loadEntity(entityName, data) {
   const params = {
     Body: data,
-    Bucket: DATAWAREHOUSE_NAME,
+    Bucket: DATA_WAREHOUSE_BUCKET_NAME,
     Key: `a/${entityName}/${new Date().toISOString()}.json`,
   };
 

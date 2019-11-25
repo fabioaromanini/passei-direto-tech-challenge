@@ -10,7 +10,7 @@ provider:
   timeout: 30
   environment:
     DATA_SOURCE_BUCKET_NAME: ${self:custom.dataSourceBucketName}
-    DATAWAREHOUSE_NAME: ${self:custom.dataWarehouseBucketName}
+    DATA_WAREHOUSE_BUCKET_NAME: ${self:custom.dataWarehouseBucketName}
     CRAWLER_NAME: ${self:custom.tableRefresherName}
   iamRoleStatements:
     - Effect: Allow
