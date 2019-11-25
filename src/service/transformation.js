@@ -70,8 +70,18 @@ function parseSessions(sessions) {
   }));
 }
 
+function transform(data) {
+  return {
+    students: denormalizeStudents(data.students, data.courses, data.universities),
+    follows: denormalizeFollows(data.student_follow_subject, data.subjects),
+    sessions: parseSessions(data.sessions),
+    subscriptions: parseSubscriptions(data.subscriptions),
+  };
+}
+
 exports.joinByKey = joinByKey;
 exports.denormalizeStudents = denormalizeStudents;
 exports.denormalizeFollows = denormalizeFollows;
 exports.parseSubscriptions = parseSubscriptions;
 exports.parseSessions = parseSessions;
+exports.transform = transform;
