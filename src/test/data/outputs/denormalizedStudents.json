@@ -16,5 +16,12 @@
     "University": "University 2",
     "Course": "Course 2",
     "SignupSource": "Google"
+  },
+  {
+    "Id": "3",
+    "RegisteredDate": "2019-01-03 11:00:00.000",
+    "State": "Rio de Janeiro",
+    "City": "Rio de Janeiro",
+    "SignupSource": "Google"
   }
 ]
