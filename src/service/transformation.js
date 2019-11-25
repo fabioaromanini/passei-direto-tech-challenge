@@ -24,7 +24,8 @@ function joinByKey(mainEntity, mainEntityKey, joinEntity, joinEntityKey) {
 
   return mainEntity.map(mainEntry => {
     const joinKey = mainEntry[mainEntityKey];
-    const { [joinEntityKey]: ignoredKey, ...joinEntryWithoutKey } = joinEntityByKey[joinKey];
+    const joinEntry = joinEntityByKey[joinKey] || {};
+    const { [joinEntityKey]: ignoredKey, ...joinEntryWithoutKey } = joinEntry;
     return {
       ...mainEntry,
       ...joinEntryWithoutKey,
@@ -33,7 +34,27 @@ function joinByKey(mainEntity, mainEntityKey, joinEntity, joinEntityKey) {
 }
 
 function denormalizeStudents(students, courses, universities) {
-  return [];
+  const parsedCourses = courses.map(course => ({
+    Id: course.Id,
+    Course: course.Name,
+  }));
+  const parsedUniversities = universities.map(university => ({
+    Id: university.Id,
+    University: university.Name,
+  }));
+
+  const studentsCoursesJoined = joinByKey(students, 'CourseId', parsedCourses, 'Id');
+  const denormalizedStudents = joinByKey(
+    studentsCoursesJoined,
+    'UniversityId',
+    parsedUniversities,
+    'Id'
+  );
+
+  return denormalizedStudents.map(entry => {
+    const { CourseId, UniversityId, ...filteredEntry } = entry;
+    return filteredEntry;
+  });
 }
 
 exports.parse = parse;
