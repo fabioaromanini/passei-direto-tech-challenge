@@ -10,16 +10,23 @@ provider:
   timeout: 30
   environment:
     SOURCE_NAME: ${self:custom.sourceName}
+    DATAWAREHOUSE_NAME: ${self:custom.dataWarehouseBucketName}
   iamRoleStatements:
     - Effect: 'Allow'
       Action:
+        - 's3:PutObject'
         - 's3:GetObject'
       Resource:
-        Fn::Join:
-          - ''
-          - - 'arn:aws:s3:::'
-            - ${self:custom.sourceName}
-            - '/*'
+        - Fn::Join:
+            - ''
+            - - 'arn:aws:s3:::'
+              - ${self:custom.sourceName}
+              - '/*'
+        - Fn::Join:
+            - ''
+            - - 'arn:aws:s3:::'
+              - ${self:custom.dataWarehouseBucketName}
+              - '/*'
 
 package:
   exclude:
