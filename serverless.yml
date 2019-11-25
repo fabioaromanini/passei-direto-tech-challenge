@@ -102,6 +102,10 @@ resources:
                   Action:
                     - s3:GetObject
                   Resource:
-                    - !GetAtt [DataWarehouseBucket, Arn]
+                    - Fn::Join:
+                        - ''
+                        - - 'arn:aws:s3:::'
+                          - ${self:custom.dataWarehouseBucketName}
+                          - '/*'
         ManagedPolicyArns:
           - arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole
