@@ -23,8 +23,8 @@ describe('Joins', () => {
   });
 });
 
-describe('Joins', () => {
-  test('Parse', () => {
+describe('Parse', () => {
+  test('Parse field names', () => {
     const result = transformationService.parse(input.subscriptions, {
       PlanType: 'Type',
       PaymentDate: 'Date',
