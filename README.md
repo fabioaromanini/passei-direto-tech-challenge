@@ -21,9 +21,9 @@ It consists of a serverless ETL which reads data from s3, apply a few transforma
 
 ## TODO
 
-- Get raw data from buckets
 - Join all data into denormalized schema
 - Parse date and numeric fields
 - Write data into s3
 - Trigger AWS Glue Crawler
 - Document solution and alternatives
+- ~~Get raw data from buckets~~
