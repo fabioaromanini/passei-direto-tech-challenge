@@ -7,11 +7,12 @@ provider:
   runtime: nodejs12.x
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'us-east-1'}
-  timeout: 30
+  timeout: 60
+  memorySize: 2048
   environment:
-    SOURCE_NAME: ${self:custom.sourceName}
-    DATAWAREHOUSE_NAME: ${self:custom.dataWarehouseBucketName}
-    CRAWLER_NAME: ${self:custom.tableRefresherName}
+    DATA_SOURCE_BUCKET_NAME: ${self:custom.dataSourceBucketName}
+    DATA_WAREHOUSE_BUCKET_NAME: ${self:custom.dataWarehouseBucketName}
+    TABLE_REFRESHER_CRAWLER_NAME: ${self:custom.tableRefresherCrawlerName}
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -21,7 +22,7 @@ provider:
         - Fn::Join:
             - ''
             - - 'arn:aws:s3:::'
-              - ${self:custom.sourceName}
+              - ${self:custom.dataSourceBucketName}
               - '/*'
         - Fn::Join:
             - ''
@@ -39,39 +40,39 @@ provider:
               - ':'
               - !Ref AWS::AccountId
               - ':crawler/'
-              - ${self:custom.tableRefresherName}
+              - ${self:custom.tableRefresherCrawlerName}
 
 package:
   exclude:
     - test
 
 custom:
-  sourceName: ${env:SOURCE_NAME, 'raw.challenge.data'}
-  dataWarehouseBucketName: ${self:provider.stage}-datawarehouse
-  tableRefresherName: ${self:provider.stage}-tableRefresherCrawler
-  dataWarehouseDatabaseName: ${self:provider.stage}-students-datamart
-  tableRefresherRoleName: ${self:provider.stage}-tableRefresherCrawlerRole-${self:provider.region}
+  dataSourceBucketName: ${env:DATA_SOURCE_BUCKET_NAME, 'mocked.data.source'}
+  dataWarehouseBucketName: ${self:provider.stage}.data.warehouse
+  dataWarehouseDatabaseName: ${self:provider.stage}-data-warehouse-database
+  tableRefresherCrawlerName: ${self:provider.stage}-table-refresher-crawler
+  tableRefresherRoleName: ${self:provider.stage}-table-refresher-crawler-role-${self:provider.region}
 
 functions:
-  extractTransform:
-    handler: src/handler.extractTransform
+  extractTransformLoad:
+    handler: src/handler.extractTransformLoad
     events:
-      - sns: ${self:provider.stage}-triggerEtl
+      - sns: ${self:provider.stage}-trigger-etl
 
 resources:
   Resources:
-    DataWarehouse:
+    DataWarehouseBucket:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: ${self:custom.dataWarehouseBucketName}
-    TableRefresher:
+    TableRefresherCrawler:
       Type: AWS::Glue::Crawler
       Properties:
-        Name: ${self:custom.tableRefresherName}
+        Name: ${self:custom.tableRefresherCrawlerName}
         Targets:
           S3Targets:
             - Path: s3://${self:custom.dataWarehouseBucketName}/
-        DatabaseName: ${self:custom.dataWarehouseDatabaseName}
+        DatabaseName: !Ref DataWarehouseDatabase
         Role: !GetAtt TableRefresherRole.Arn
       DependsOn:
         - DataWarehouseDatabase
@@ -106,6 +107,5 @@ resources:
                         - - 'arn:aws:s3:::'
                           - ${self:custom.dataWarehouseBucketName}
                           - '/*'
-        RoleName: ${self:custom.tableRefresherRoleName}
         ManagedPolicyArns:
           - arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole

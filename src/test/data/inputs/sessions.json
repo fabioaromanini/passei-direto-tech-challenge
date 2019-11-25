@@ -1,0 +1,17 @@
+[
+  {
+    "StudentId": "1",
+    "SessionStartTime": "2019-01-01 11:30:00.000",
+    "StudentClient": "Website"
+  },
+  {
+    "StudentId": "1",
+    "SessionStartTime": "2019-01-01 11:35:00.000",
+    "StudentClient": "Webapp"
+  },
+  {
+    "StudentId": "2",
+    "SessionStartTime": "2019-01-02 11:30:00.000",
+    "StudentClient": "Android"
+  }
+]

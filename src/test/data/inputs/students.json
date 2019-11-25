@@ -1,27 +1,29 @@
 [
   {
     "Id": "1",
-    "Date": "2019-01-01 11:00:00.000",
+    "RegisteredDate": "2019-01-01 11:00:00.000",
     "State": "Rio de Janeiro",
     "City": "Rio de Janeiro",
-    "University": "University 1",
-    "Course": "Course 1",
+    "UniversityId": 1,
+    "CourseId": 1,
     "SignupSource": "Facebook"
   },
   {
     "Id": "2",
-    "Date": "2019-01-02 11:00:00.000",
+    "RegisteredDate": "2019-01-02 11:00:00.000",
     "State": "Rio de Janeiro",
     "City": "Rio de Janeiro",
-    "University": "University 2",
-    "Course": "Course 2",
+    "UniversityId": 2,
+    "CourseId": 2,
     "SignupSource": "Google"
   },
   {
     "Id": "3",
-    "Date": "2019-01-03 11:00:00.000",
+    "RegisteredDate": "2019-01-03 11:00:00.000",
     "State": "Rio de Janeiro",
     "City": "Rio de Janeiro",
+    "UniversityId": 3,
+    "CourseId": 3,
     "SignupSource": "Google"
   }
 ]
