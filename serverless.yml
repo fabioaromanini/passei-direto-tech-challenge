@@ -8,6 +8,7 @@ provider:
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'us-east-1'}
   timeout: 60
+  memorySize: 2048
   environment:
     DATA_SOURCE_BUCKET_NAME: ${self:custom.dataSourceBucketName}
     DATA_WAREHOUSE_BUCKET_NAME: ${self:custom.dataWarehouseBucketName}
@@ -23,7 +24,11 @@ provider:
             - - 'arn:aws:s3:::'
               - ${self:custom.dataSourceBucketName}
               - '/*'
-        - !GetAtt [DataWarehouseBucket, Arn]
+        - Fn::Join:
+            - ''
+            - - 'arn:aws:s3:::'
+              - ${self:custom.dataWarehouseBucketName}
+              - '/*'
     - Effect: Allow
       Action:
         - glue:StartCrawler
