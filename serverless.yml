@@ -7,6 +7,7 @@ provider:
   runtime: nodejs12.x
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'us-east-1'}
+  timeout: 30
   environment:
     SOURCE_NAME: ${self:custom.sourceName}
   iamRoleStatements:
