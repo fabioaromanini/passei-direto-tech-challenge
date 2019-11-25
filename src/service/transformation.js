@@ -46,5 +46,10 @@ function denormalizeStudents(students, courses, universities) {
   });
 }
 
+function denormalizeFollows(follows, subjects) {
+  return [];
+}
+
 exports.joinByKey = joinByKey;
 exports.denormalizeStudents = denormalizeStudents;
+exports.denormalizeFollows = denormalizeFollows;

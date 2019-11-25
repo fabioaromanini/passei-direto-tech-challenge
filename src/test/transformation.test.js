@@ -2,6 +2,7 @@ const transformationService = require('../service/transformation');
 
 const input = require('./data/inputs/transformationService.json');
 const denormalizedStudents = require('./data/outputs/denormalizedStudents.json');
+const denormalizedFollows = require('./data/outputs/denormalizedFollows.json');
 const joinedCourse = require('./data/outputs/joinedCourse.json');
 const joinedFollows = require('./data/outputs/joinedFollows.json');
 
@@ -28,5 +29,11 @@ describe('Transformations', () => {
     const { students, courses, universities } = input;
     const result = transformationService.denormalizeStudents(students, courses, universities);
     expect(result).toEqual(denormalizedStudents);
+  });
+
+  test('Denormalize Follows', () => {
+    const { follow, subjects } = input;
+    const result = transformationService.denormalizeFollows(follow, subjects);
+    expect(result).toEqual(denormalizedFollows);
   });
 });
