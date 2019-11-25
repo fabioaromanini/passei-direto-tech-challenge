@@ -1,0 +1,22 @@
+[
+  {
+    "StudentId": "1",
+    "Date": "2019-01-01 12:00:00.000",
+    "Type": "Mensal"
+  },
+  {
+    "StudentId": "1",
+    "Date": "2019-02-01 12:00:00.000",
+    "Type": "Mensal"
+  },
+  {
+    "StudentId": "2",
+    "Date": "2019-01-02 12:00:00.000",
+    "Type": "Anual"
+  },
+  {
+    "StudentId": "2",
+    "Date": "2020-01-02 12:00:00.000",
+    "Type": "Anual"
+  }
+]

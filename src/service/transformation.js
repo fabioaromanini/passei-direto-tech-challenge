@@ -54,6 +54,11 @@ function denormalizeFollows(follows, subjects) {
   });
 }
 
+function parseSubscriptions(subscriptions) {
+  return [];
+}
+
 exports.joinByKey = joinByKey;
 exports.denormalizeStudents = denormalizeStudents;
 exports.denormalizeFollows = denormalizeFollows;
+exports.parseSubscriptions = parseSubscriptions;
