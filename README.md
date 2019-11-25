@@ -42,6 +42,8 @@ This project uses CloudFormation for cloud resources management, therefore every
 
 This pipeline is triggered by sending a message in a SNS topic named `dev-trigger-etl`. Once you do it, data will be available in a Athena database called `dev-data-warehouse-database` in a few minutes.
 
+All logs may be viewed in CloudWatch.
+
 ## TODO
 
 - Document solution and alternatives
