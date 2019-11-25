@@ -12,10 +12,10 @@ provider:
     SOURCE_NAME: ${self:custom.sourceName}
     DATAWAREHOUSE_NAME: ${self:custom.dataWarehouseBucketName}
   iamRoleStatements:
-    - Effect: 'Allow'
+    - Effect: Allow
       Action:
-        - 's3:PutObject'
-        - 's3:GetObject'
+        - s3:PutObject
+        - s3:GetObject
       Resource:
         - Fn::Join:
             - ''
@@ -35,6 +35,9 @@ package:
 custom:
   sourceName: ${env:SOURCE_NAME, 'raw.challenge.data'}
   dataWarehouseBucketName: ${self:provider.stage}-datawarehouse
+  tableRefresherName: ${self:provider.stage}-tableRefresherCrawler
+  dataWarehouseDatabaseName: ${self:provider.stage}-students-datamart
+  tableRefresherRoleName: ${self:provider.stage}-tableRefresherCrawlerRole-${self:provider.region}
 
 functions:
   extractTransform:
@@ -48,3 +51,48 @@ resources:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: ${self:custom.dataWarehouseBucketName}
+    TableRefresher:
+      Type: AWS::Glue::Crawler
+      Properties:
+        Name: ${self:custom.tableRefresherName}
+        Targets:
+          S3Targets:
+            - Path: s3://${self:custom.dataWarehouseBucketName}/
+        DatabaseName: ${self:custom.dataWarehouseDatabaseName}
+        Role: !GetAtt TableRefresherRole.Arn
+      DependsOn:
+        - DataWarehouseDatabase
+        - TableRefresherRole
+    DataWarehouseDatabase:
+      Type: AWS::Glue::Database
+      Properties:
+        CatalogId: !Ref AWS::AccountId
+        DatabaseInput:
+          Name: ${self:custom.dataWarehouseDatabaseName}
+    TableRefresherRole:
+      Type: AWS::IAM::Role
+      Properties:
+        AssumeRolePolicyDocument:
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service:
+                  - glue.amazonaws.com
+              Action:
+                - sts:AssumeRole
+        Policies:
+          - PolicyName: ${self:custom.tableRefresherRoleName}
+            PolicyDocument:
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - s3:GetObject
+                  Resource:
+                    - Fn::Join:
+                        - ''
+                        - - 'arn:aws:s3:::'
+                          - ${self:custom.dataWarehouseBucketName}
+                          - '/*'
+        RoleName: ${self:custom.tableRefresherRoleName}
+        ManagedPolicyArns:
+          - arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole
