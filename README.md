@@ -36,7 +36,7 @@ export DATA_SOURCE_BUCKET_NAME=<your-data-source-bucket-name>
 1. `npm install`
 2. `npm run deploy --stage <your-name>`
 
-This project uses CloudFormation for cloud resources management, therefore everything you need to run the pipeline (except for the mocked data warehouse) will be created when you execute `npm run deploy`.
+This project uses CloudFormation for cloud resources management, therefore everything you need to run the pipeline (except for the mocked data source) will be created when you execute `npm run deploy`.
 
 ## Trigger
 
