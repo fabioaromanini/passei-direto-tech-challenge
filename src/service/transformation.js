@@ -55,7 +55,11 @@ function denormalizeFollows(follows, subjects) {
 }
 
 function parseSubscriptions(subscriptions) {
-  return [];
+  return subscriptions.map(entry => ({
+    Date: entry.PaymentDate,
+    Type: entry.PlanType,
+    StudentId: entry.StudentId,
+  }));
 }
 
 exports.joinByKey = joinByKey;
