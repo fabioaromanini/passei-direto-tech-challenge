@@ -2,8 +2,8 @@ const transformationService = require('../service/transformation');
 
 const input = require('./data/inputs/transformationService.json');
 const joinedCourse = require('./data/outputs/joinedCourse.json');
-const joinedSubscriptions = require('./data/outputs/joinedSubscriptions.json');
 const parsedSubscription = require('./data/outputs/parsedSubscription.json');
+const denormalizedStudents = require('./data/outputs/denormalizedStudents.json');
 
 describe('Joins', () => {
   beforeAll(() => {
@@ -31,5 +31,13 @@ describe('Parse', () => {
     });
 
     expect(result).toEqual(parsedSubscription);
+  });
+});
+
+describe('Transformations', () => {
+  test('Denormalize students', () => {
+    const { students, courses, universities } = input;
+    const result = transformationService.denormalizeStudents(students, courses, universities);
+    expect(result).toEqual(denormalizedStudents);
   });
 });

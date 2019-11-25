@@ -32,5 +32,10 @@ function joinByKey(mainEntity, mainEntityKey, joinEntity, joinEntityKey) {
   });
 }
 
-exports.joinByKey = joinByKey;
+function denormalizeStudents(students, courses, universities) {
+  return [];
+}
+
 exports.parse = parse;
+exports.joinByKey = joinByKey;
+exports.denormalizeStudents = denormalizeStudents;
