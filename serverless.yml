@@ -11,7 +11,7 @@ provider:
   environment:
     DATA_SOURCE_BUCKET_NAME: ${self:custom.dataSourceBucketName}
     DATA_WAREHOUSE_BUCKET_NAME: ${self:custom.dataWarehouseBucketName}
-    TABLE_REFRESHER_CRAWLER_NAME: ${self:custom.tableRefresherName}
+    TABLE_REFRESHER_CRAWLER_NAME: ${self:custom.tableRefresherCrawlerName}
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -35,7 +35,7 @@ provider:
               - ':'
               - !Ref AWS::AccountId
               - ':crawler/'
-              - ${self:custom.tableRefresherName}
+              - ${self:custom.tableRefresherCrawlerName}
 
 package:
   exclude:
@@ -44,15 +44,15 @@ package:
 custom:
   dataSourceBucketName: ${env:DATA_SOURCE_BUCKET_NAME, 'mocked.data.source'}
   dataWarehouseBucketName: ${self:provider.stage}.data.warehouse
-  tableRefresherName: ${self:provider.stage}-tableRefresherCrawler
-  dataWarehouseDatabaseName: ${self:provider.stage}-students-datamart
-  tableRefresherRoleName: ${self:provider.stage}-tableRefresherCrawlerRole-${self:provider.region}
+  dataWarehouseDatabaseName: ${self:provider.stage}-data-warehouse-database
+  tableRefresherCrawlerName: ${self:provider.stage}-table-refresher-crawler
+  tableRefresherRoleName: ${self:provider.stage}-table-refresher-crawler-role-${self:provider.region}
 
 functions:
   extractTransformLoad:
     handler: src/handler.extractTransformLoad
     events:
-      - sns: ${self:provider.stage}-triggerEtl
+      - sns: ${self:provider.stage}-trigger-etl
 
 resources:
   Resources:
@@ -60,14 +60,14 @@ resources:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: ${self:custom.dataWarehouseBucketName}
-    TableRefresher:
+    TableRefresherCrawler:
       Type: AWS::Glue::Crawler
       Properties:
-        Name: ${self:custom.tableRefresherName}
+        Name: ${self:custom.tableRefresherCrawlerName}
         Targets:
           S3Targets:
             - Path: s3://${self:custom.dataWarehouseBucketName}/
-        DatabaseName: ${self:custom.dataWarehouseDatabaseName}
+        DatabaseName: !Ref DataWarehouseDatabase
         Role: !GetAtt TableRefresherRole.Arn
       DependsOn:
         - DataWarehouseDatabase
@@ -97,11 +97,6 @@ resources:
                   Action:
                     - s3:GetObject
                   Resource:
-                    - Fn::Join:
-                        - ''
-                        - - 'arn:aws:s3:::'
-                          - ${self:custom.dataWarehouseBucketName}
-                          - '/*'
-        RoleName: ${self:custom.tableRefresherRoleName}
+                    - !GetAtt [DataWarehouseBucket, Arn]
         ManagedPolicyArns:
           - arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole

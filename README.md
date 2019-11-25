@@ -40,7 +40,7 @@ This project uses CloudFormation for cloud resources management, therefore every
 
 ## Trigger
 
-This pipeline is triggered by sending a message in a SNS topic named `dev-triggerEtl`. Once you do it, data will be available in a Athena database called `dev-students-datamart` in a few minutes.
+This pipeline is triggered by sending a message in a SNS topic named `dev-trigger-etl`. Once you do it, data will be available in a Athena database called `dev-data-warehouse-database` in a few minutes.
 
 ## TODO
 
