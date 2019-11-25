@@ -27,9 +27,17 @@ package:
 
 custom:
   sourceName: ${env:SOURCE_NAME, 'raw.challenge.data'}
+  dataWarehouseBucketName: ${self:provider.stage}-datawarehouse
 
 functions:
   extractTransform:
     handler: src/handler.extractTransform
     events:
       - sns: ${self:provider.stage}-triggerEtl
+
+resources:
+  Resources:
+    DataWarehouse:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.dataWarehouseBucketName}
