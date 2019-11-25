@@ -47,7 +47,11 @@ function denormalizeStudents(students, courses, universities) {
 }
 
 function denormalizeFollows(follows, subjects) {
-  return [];
+  const joinedFollows = joinByKey(follows, 'SubjectId', subjects, 'Id');
+  return joinedFollows.map(entry => {
+    const { FollowDate, Name, SubjectId, ...filteredEntry } = entry;
+    return { ...filteredEntry, Subject: Name, Date: FollowDate };
+  });
 }
 
 exports.joinByKey = joinByKey;

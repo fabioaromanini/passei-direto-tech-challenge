@@ -32,7 +32,7 @@ describe('Transformations', () => {
   });
 
   test('Denormalize Follows', () => {
-    const { follow, subjects } = input;
+    const { student_follow_subject: follow, subjects } = input;
     const result = transformationService.denormalizeFollows(follow, subjects);
     expect(result).toEqual(denormalizedFollows);
   });
