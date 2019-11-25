@@ -25,10 +25,10 @@ root/
 ```
 
 - The schemas for each file are described in src/test/data/inputs/transformationService.json. Since the data is proprietary, I will not make it available in this repository, but you can create your own data from the schema I provided.
-- Also, the name of the bucket must be exported as a environment variable named DATA_SOURCE_NAME.
+- Also, the name of the bucket must be exported as a environment variable named DATA_SOURCE_BUCKET_NAME.
 
 ```sh
-export DATA_SOURCE_NAME=<your-data-source-bucket-name>
+export DATA_SOURCE_BUCKET_NAME=<your-data-source-bucket-name>
 ```
 
 ## Deploy
