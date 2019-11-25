@@ -2,7 +2,7 @@ const sourceService = require('./service/source');
 const transformationService = require('./service/transformation');
 const datawarehouseService = require('./service/datawarehouse');
 
-exports.extractTransform = async event => {
+exports.extractTransformLoad = async event => {
   const data = await sourceService.extract();
   console.log('Extracted data from source');
 

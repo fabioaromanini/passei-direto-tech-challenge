@@ -53,8 +53,8 @@ custom:
   tableRefresherRoleName: ${self:provider.stage}-tableRefresherCrawlerRole-${self:provider.region}
 
 functions:
-  extractTransform:
-    handler: src/handler.extractTransform
+  extractTransformLoad:
+    handler: src/handler.extractTransformLoad
     events:
       - sns: ${self:provider.stage}-triggerEtl
 
