@@ -7,6 +7,7 @@ provider:
   runtime: nodejs12.x
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'us-east-1'}
+  timeout: 30
   environment:
     SOURCE_NAME: ${self:custom.sourceName}
   iamRoleStatements:
@@ -19,6 +20,10 @@ provider:
           - - 'arn:aws:s3:::'
             - ${self:custom.sourceName}
             - '/*'
+
+package:
+  exclude:
+    - test
 
 custom:
   sourceName: ${env:SOURCE_NAME, 'raw.challenge.data'}

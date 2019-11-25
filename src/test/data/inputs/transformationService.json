@@ -1,0 +1,122 @@
+{
+  "courses": [
+    {
+      "Id": 1,
+      "Name": "Course 1"
+    },
+    {
+      "Id": 2,
+      "Name": "Course 2"
+    }
+  ],
+  "subscriptions": [
+    {
+      "StudentId": "1",
+      "PaymentDate": "2019-01-01 12:00:00.000",
+      "PlanType": "Mensal"
+    },
+    {
+      "StudentId": "1",
+      "PaymentDate": "2019-02-01 12:00:00.000",
+      "PlanType": "Mensal"
+    },
+    {
+      "StudentId": "2",
+      "PaymentDate": "2019-01-02 12:00:00.000",
+      "PlanType": "Anual"
+    },
+    {
+      "StudentId": "2",
+      "PaymentDate": "2020-01-02 12:00:00.000",
+      "PlanType": "Anual"
+    }
+  ],
+  "universities": [
+    {
+      "Id": 1,
+      "Name": "University 1"
+    },
+    {
+      "Id": 2,
+      "Name": "University 2"
+    }
+  ],
+  "subjects": [
+    {
+      "Id": 1,
+      "Name": "Subject 1"
+    },
+    {
+      "Id": 2,
+      "Name": "Subject 2"
+    }
+  ],
+  "students": [
+    {
+      "Id": "1",
+      "RegisteredDate": "2019-01-01 11:00:00.000",
+      "State": "Rio de Janeiro",
+      "City": "Rio de Janeiro",
+      "UniversityId": 1,
+      "CourseId": 1,
+      "SignupSource": "Facebook"
+    },
+    {
+      "Id": "2",
+      "RegisteredDate": "2019-01-02 11:00:00.000",
+      "State": "Rio de Janeiro",
+      "City": "Rio de Janeiro",
+      "UniversityId": 2,
+      "CourseId": 2,
+      "SignupSource": "Google"
+    },
+    {
+      "Id": "3",
+      "RegisteredDate": "2019-01-03 11:00:00.000",
+      "State": "Rio de Janeiro",
+      "City": "Rio de Janeiro",
+      "UniversityId": 3,
+      "CourseId": 3,
+      "SignupSource": "Google"
+    }
+  ],
+  "sessions": [
+    {
+      "StudentId": "1",
+      "SessionStartTime": "2019-01-01 11:30:00.000",
+      "StudentClient": "Website"
+    },
+    {
+      "StudentId": "1",
+      "SessionStartTime": "2019-01-01 11:35:00.000",
+      "StudentClient": "Webapp"
+    },
+    {
+      "StudentId": "2",
+      "SessionStartTime": "2019-01-02 11:30:00.000",
+      "StudentClient": "Android"
+    }
+  ],
+  "student_follow_subject": [
+    {
+      "StudentId": "1",
+      "SubjectId": 1,
+      "FollowDate": "2019-01-01 13:00:00.0000"
+    },
+    {
+      "StudentId": "1",
+      "SubjectId": 2,
+      "FollowDate": "2019-01-01 14:00:00.0000"
+    },
+    {
+      "StudentId": "2",
+      "SubjectId": 1,
+      "FollowDate": "2019-01-02 13:00:00.0000"
+    },
+    {
+      "StudentId": "2",
+      "SubjectId": 2,
+      "FollowDate": "2019-01-02 14:00:00.0000"
+    }
+  ]
+}

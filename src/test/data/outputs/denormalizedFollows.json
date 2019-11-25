@@ -1,0 +1,22 @@
+[
+  {
+    "StudentId": "1",
+    "Subject": "Subject 1",
+    "Date": "2019-01-01 13:00:00.0000"
+  },
+  {
+    "StudentId": "1",
+    "Subject": "Subject 2",
+    "Date": "2019-01-01 14:00:00.0000"
+  },
+  {
+    "StudentId": "2",
+    "Subject": "Subject 1",
+    "Date": "2019-01-02 13:00:00.0000"
+  },
+  {
+    "StudentId": "2",
+    "Subject": "Subject 2",
+    "Date": "2019-01-02 14:00:00.0000"
+  }
+]

@@ -1,7 +1,22 @@
 const sourceService = require('./service/source');
+const transformationService = require('./service/transformation');
 
 exports.extractTransform = async event => {
-  console.log('Hello, world with Circle-ci and deploys happening only on master:D');
   const data = await sourceService.extract();
-  console.log(data);
+  console.log('Extracted data from source');
+  const students = transformationService.denormalizeStudents(
+    data.students,
+    data.courses,
+    data.universities
+  );
+  console.log('Finished students transformation');
+  const follows = transformationService.denormalizeFollows(
+    data.student_follow_subject,
+    data.subjects
+  );
+  console.log('Finished follows transformation');
+  const sessions = transformationService.parseSessions(data.sessions);
+  console.log('Finished sessions transformation');
+  const subscriptions = transformationService.parseSubscriptions(data.subscriptions);
+  console.log('Finished subscriptions transformation');
 };

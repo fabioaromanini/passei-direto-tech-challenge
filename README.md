@@ -21,9 +21,10 @@ It consists of a serverless ETL which reads data from s3, apply a few transforma
 
 ## TODO
 
-- Get raw data from buckets
-- Join all data into denormalized schema
-- Parse date and numeric fields
 - Write data into s3
 - Trigger AWS Glue Crawler
 - Document solution and alternatives
+- ~~Parse fields~~
+- ~~Join students, courses and universities into a single denormalized schema~~
+- ~~Join subjects and follows into a single denormalized schema~~
+- ~~Get raw data from buckets~~
