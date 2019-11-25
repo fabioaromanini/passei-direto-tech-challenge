@@ -46,7 +46,8 @@ All logs may be viewed in CloudWatch.
 
 ## TODO
 
-- Document solution and alternatives
+#### Step 1
+
 - ~~Trigger AWS Glue Crawler~~
 - ~~Write data into s3~~
 - ~~Rename fields~~
