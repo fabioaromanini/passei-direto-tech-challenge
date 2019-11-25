@@ -11,19 +11,13 @@ exports.extractTransformLoad = async event => {
     data.courses,
     data.universities
   );
-  console.log('Finished students transformation');
-
   const follows = transformationService.denormalizeFollows(
     data.student_follow_subject,
     data.subjects
   );
-  console.log('Finished follows transformation');
-
   const sessions = transformationService.parseSessions(data.sessions);
-  console.log('Finished sessions transformation');
-
   const subscriptions = transformationService.parseSubscriptions(data.subscriptions);
-  console.log('Finished subscriptions transformation');
+  console.log('Finished transformations');
 
   await datawarehouseService.load({
     sessions,
