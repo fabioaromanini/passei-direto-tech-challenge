@@ -32,4 +32,7 @@ exports.extractTransform = async event => {
     follows,
   });
   console.log('Finished uploading files to datawarehouse');
+
+  await datawarehouseService.refreshTables();
+  console.log('Crawler triggered');
 };
