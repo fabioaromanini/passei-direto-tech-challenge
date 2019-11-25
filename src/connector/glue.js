@@ -2,12 +2,12 @@ const AWS = require('aws-sdk');
 
 const client = new AWS.Glue();
 
-const { CRAWLER_NAME } = process.env;
+const { TABLE_REFRESHER_CRAWLER_NAME } = process.env;
 
 async function startCrawler() {
   return client
     .startCrawler({
-      Name: CRAWLER_NAME,
+      Name: TABLE_REFRESHER_CRAWLER_NAME,
     })
     .promise();
 }

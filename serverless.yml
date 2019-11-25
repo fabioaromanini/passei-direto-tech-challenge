@@ -11,7 +11,7 @@ provider:
   environment:
     DATA_SOURCE_BUCKET_NAME: ${self:custom.dataSourceBucketName}
     DATA_WAREHOUSE_BUCKET_NAME: ${self:custom.dataWarehouseBucketName}
-    CRAWLER_NAME: ${self:custom.tableRefresherName}
+    TABLE_REFRESHER_CRAWLER_NAME: ${self:custom.tableRefresherName}
   iamRoleStatements:
     - Effect: Allow
       Action:
