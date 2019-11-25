@@ -2,22 +2,45 @@
 
 [![CircleCI](https://circleci.com/gh/fabioaromanini/passei-direto-tech-challenge.svg?style=svg&circle-token=fe0b0cf773d6dbacbf1f77c427c31ae1f1c0f19f)](https://circleci.com/gh/fabioaromanini/passei-direto-tech-challenge)
 
-Code for Passei Direto Tech Challenge.
+Repository with code for a technical challenge I'm facing in my job interview for Passei Direto.
 
-## Step 1: Data Wrangling
+The challenge consist of creating a data warehouse from a set of json files, and running some Spark jobs that process data from said data warehouse.
 
-It consists of a serverless ETL which reads data from s3, apply a few transformations (type parsing and joins), and loads it into a data warehouse (also a s3 bucket). It is triggered by a SNS topic, and in case it needed to run periodically, it's trigger mechanism could easily be switched to a cloudwatch scheduled event. Once the data is loaded into the data warehouse, an AWS Glue Crawler is triggered for creating a Athena table from the transformed data.
-
-## Dependencies
+## Requirements
 
 - Node v12.13.x
-- [Serverless Framewok](https://serverless.com)
-- [AWS Credentials](https://serverless.com/framework/docs/providers/aws/guide/credentials/)
+- [AWS Credentials as explained here](https://serverless.com/framework/docs/providers/aws/guide/credentials/)
+- An s3 bucket that acts as a mocked data source with the following files:
+
+```
+root/
+  a/
+    courses.json
+    sessions.json
+    subjects.json
+    subscriptions.json
+    students.json
+    student_follow_subject.json
+    universities.json
+```
+
+- The schemas for each file are described in src/test/data/inputs/transformationService.json. Since the data is proprietary, I will not make it available in this repository, but you can create your own data from the schema I provided.
+- Also, the name of the bucket must be exported as a environment variable named DATA_SOURCE_NAME.
+
+```sh
+export DATA_SOURCE_NAME=<your-data-source-bucket-name>
+```
 
 ## Deploy
 
 1. `npm install`
 2. `npm run deploy`
+
+This project uses CloudFormation for cloud resources management, therefore everything you need to run the pipeline (except for the mocked data warehouse) will be created when you execute `npm run deploy`.
+
+## Trigger
+
+This pipeline is triggered by sending a message in a SNS topic named `dev-triggerEtl`. Once you do it, data will be available in a Athena database called `dev-students-datamart` in a few minutes.
 
 ## TODO
 
@@ -27,4 +50,4 @@ It consists of a serverless ETL which reads data from s3, apply a few transforma
 - ~~Rename fields~~
 - ~~Join students, courses and universities into a single denormalized schema~~
 - ~~Join subjects and follows into a single denormalized schema~~
-- ~~Get raw data from buckets~~
+- ~~Get data from data source bucket~~
