@@ -1,7 +1,7 @@
 [
   {
     "Id": "1",
-    "RegisteredDate": "2019-01-01 11:00:00.000",
+    "Date": "2019-01-01 11:00:00.000",
     "State": "Rio de Janeiro",
     "City": "Rio de Janeiro",
     "University": "University 1",
@@ -10,7 +10,7 @@
   },
   {
     "Id": "2",
-    "RegisteredDate": "2019-01-02 11:00:00.000",
+    "Date": "2019-01-02 11:00:00.000",
     "State": "Rio de Janeiro",
     "City": "Rio de Janeiro",
     "University": "University 2",
@@ -19,7 +19,7 @@
   },
   {
     "Id": "3",
-    "RegisteredDate": "2019-01-03 11:00:00.000",
+    "Date": "2019-01-03 11:00:00.000",
     "State": "Rio de Janeiro",
     "City": "Rio de Janeiro",
     "SignupSource": "Google"

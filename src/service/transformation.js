@@ -42,7 +42,7 @@ function denormalizeStudents(students, courses, universities) {
 
   return denormalizedStudents.map(entry => {
     const { CourseId, UniversityId, RegisteredDate, ...filteredEntry } = entry;
-    return { ...filteredEntry, Date: new Date(RegisteredDate).toISOString() };
+    return { ...filteredEntry, Date: RegisteredDate };
   });
 }
 
@@ -50,13 +50,13 @@ function denormalizeFollows(follows, subjects) {
   const joinedFollows = joinByKey(follows, 'SubjectId', subjects, 'Id');
   return joinedFollows.map(entry => {
     const { FollowDate, Name, SubjectId, ...filteredEntry } = entry;
-    return { ...filteredEntry, Subject: Name, Date: new Date(FollowDate).toISOString() };
+    return { ...filteredEntry, Subject: Name, Date: FollowDate };
   });
 }
 
 function parseSubscriptions(subscriptions) {
   return subscriptions.map(entry => ({
-    Date: new Date(entry.PaymentDate).toISOString(),
+    Date: entry.PaymentDate,
     Type: entry.PlanType,
     StudentId: entry.StudentId,
   }));
@@ -65,7 +65,7 @@ function parseSubscriptions(subscriptions) {
 function parseSessions(sessions) {
   return sessions.map(entry => ({
     Client: entry.StudentClient,
-    StartTime: new Date(entry.SessionStartTime).toISOString(),
+    StartTime: entry.SessionStartTime,
     StudentId: entry.StudentId,
   }));
 }
