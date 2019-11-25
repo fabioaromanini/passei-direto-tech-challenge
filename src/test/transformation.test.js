@@ -6,6 +6,7 @@ const denormalizedFollows = require('./data/outputs/denormalizedFollows.json');
 const joinedCourse = require('./data/outputs/joinedCourse.json');
 const joinedFollows = require('./data/outputs/joinedFollows.json');
 const parsedSubscriptions = require('./data/outputs/parsedSubscriptions.json');
+const parsedSessions = require('./data/outputs/parsedSessions.json');
 
 describe('Joins', () => {
   test('Join By Key', () => {
@@ -42,5 +43,11 @@ describe('Transformations', () => {
     const { subscriptions } = input;
     const result = transformationService.parseSubscriptions(subscriptions);
     expect(result).toEqual(parsedSubscriptions);
+  });
+
+  test('Parse Sessions', () => {
+    const { sessions } = input;
+    const result = transformationService.parseSessions(sessions);
+    expect(result).toEqual(parsedSessions);
   });
 });

@@ -62,7 +62,16 @@ function parseSubscriptions(subscriptions) {
   }));
 }
 
+function parseSessions(sessions) {
+  return sessions.map(entry => ({
+    Client: entry.StudentClient,
+    StartTime: entry.SessionStartTime,
+    StudentId: entry.StudentId,
+  }));
+}
+
 exports.joinByKey = joinByKey;
 exports.denormalizeStudents = denormalizeStudents;
 exports.denormalizeFollows = denormalizeFollows;
 exports.parseSubscriptions = parseSubscriptions;
+exports.parseSessions = parseSessions;
