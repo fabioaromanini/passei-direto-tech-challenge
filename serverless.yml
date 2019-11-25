@@ -23,11 +23,7 @@ provider:
             - - 'arn:aws:s3:::'
               - ${self:custom.dataSourceBucketName}
               - '/*'
-        - Fn::Join:
-            - ''
-            - - 'arn:aws:s3:::'
-              - ${self:custom.dataWarehouseBucketName}
-              - '/*'
+        - !GetAtt [DataWarehouseBucket, Arn]
     - Effect: Allow
       Action:
         - glue:StartCrawler
@@ -47,7 +43,7 @@ package:
 
 custom:
   dataSourceBucketName: ${env:DATA_SOURCE_BUCKET_NAME, 'mocked.data.source'}
-  dataWarehouseBucketName: ${self:provider.stage}-datawarehouse
+  dataWarehouseBucketName: ${self:provider.stage}.data.warehouse
   tableRefresherName: ${self:provider.stage}-tableRefresherCrawler
   dataWarehouseDatabaseName: ${self:provider.stage}-students-datamart
   tableRefresherRoleName: ${self:provider.stage}-tableRefresherCrawlerRole-${self:provider.region}
@@ -60,7 +56,7 @@ functions:
 
 resources:
   Resources:
-    DataWarehouse:
+    DataWarehouseBucket:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: ${self:custom.dataWarehouseBucketName}
