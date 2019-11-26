@@ -46,7 +46,12 @@ All logs may be viewed in CloudWatch.
 
 ## TODO
 
-#### Step 1
+- Move table definition to CloudFormation
+- Create views?
+- ~~Improve log system~~
+- ~~Enable x-ray~~
+
+#### ~~Step 1~~
 
 - ~~Trigger AWS Glue Crawler~~
 - ~~Write data into s3~~
