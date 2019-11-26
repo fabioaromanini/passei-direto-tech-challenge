@@ -9,6 +9,9 @@ provider:
   region: ${opt:region, 'us-east-1'}
   timeout: 60
   memorySize: 2048
+  tracing:
+    apiGateway: true
+    lambda: true
   environment:
     DATA_SOURCE_BUCKET_NAME: ${self:custom.dataSourceBucketName}
     DATA_WAREHOUSE_BUCKET_NAME: ${self:custom.dataWarehouseBucketName}
@@ -41,6 +44,11 @@ provider:
               - !Ref AWS::AccountId
               - ':crawler/'
               - ${self:custom.tableRefresherCrawlerName}
+    - Effect: Allow
+      Action:
+        - xray:PutTraceSegments
+        - xray:PutTelemetryRecords
+      Resource: '*'
 
 package:
   exclude:
