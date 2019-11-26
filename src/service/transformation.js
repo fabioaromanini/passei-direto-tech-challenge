@@ -39,6 +39,9 @@ function denormalizeStudents(students, courses, universities) {
     parsedUniversities,
     'Id'
   );
+  console.debug(
+    `Denormalized ${students.length} students, ${courses.length} courses and ${universities.length} universities`
+  );
 
   return denormalizedStudents.map(entry => {
     const { CourseId, UniversityId, RegisteredDate, ...filteredEntry } = entry;
@@ -48,6 +51,7 @@ function denormalizeStudents(students, courses, universities) {
 
 function denormalizeFollows(follows, subjects) {
   const joinedFollows = joinByKey(follows, 'SubjectId', subjects, 'Id');
+  console.debug(`Denormalized ${follows.length} follows and ${subjects.length} subjects`);
   return joinedFollows.map(entry => {
     const { FollowDate, Name, SubjectId, ...filteredEntry } = entry;
     return { ...filteredEntry, Subject: Name, Date: FollowDate };
@@ -55,6 +59,7 @@ function denormalizeFollows(follows, subjects) {
 }
 
 function parseSubscriptions(subscriptions) {
+  console.debug(`Parsing ${subscriptions.length} subscriptions`);
   return subscriptions.map(entry => ({
     Date: entry.PaymentDate,
     Type: entry.PlanType,
@@ -63,6 +68,7 @@ function parseSubscriptions(subscriptions) {
 }
 
 function parseSessions(sessions) {
+  console.debug(`Parsing ${sessions.length} sessions`);
   return sessions.map(entry => ({
     Client: entry.StudentClient,
     StartTime: entry.SessionStartTime,

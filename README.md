@@ -46,9 +46,9 @@ All logs may be viewed in CloudWatch.
 
 ## TODO
 
-- Improve log system
 - Move table definition to CloudFormation
 - Create views?
+- ~~Improve log system~~
 - ~~Enable x-ray~~
 
 #### ~~Step 1~~
