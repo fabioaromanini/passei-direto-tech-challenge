@@ -46,13 +46,15 @@ All logs may be viewed in CloudWatch.
 
 ## TODO
 
-- Move table definition to CloudFormation
-- Create views?
+#### Step 2: Use spark to process site events
+
+- Define a Spark job
+- Create an EMR step cluster
+
+#### ~~Step 1: Load relational data about users into Athena~~
+
 - ~~Improve log system~~
 - ~~Enable x-ray~~
-
-#### ~~Step 1~~
-
 - ~~Trigger AWS Glue Crawler~~
 - ~~Write data into s3~~
 - ~~Rename fields~~
