@@ -34,7 +34,7 @@ export DATA_SOURCE_BUCKET_NAME=<your-data-source-bucket-name>
 ## Deploy
 
 1. `npm install`
-2. `npm run deploy --stage <your-name>`
+2. `npm run deploy --stage <your-name-lowercase-only>`
 
 This project uses CloudFormation for cloud resources management, therefore everything you need to run the pipeline (except for the mocked data source) will be created when you execute `npm run deploy`.
 
