@@ -56,6 +56,7 @@ package:
 
 custom:
   dataSourceBucketName: ${env:DATA_SOURCE_BUCKET_NAME, 'mocked.data.source'}
+  sparkJobsBucketName: ${self:provider.stage}-spark-jobs
   dataWarehouseBucketName: ${self:provider.stage}.data.warehouse
   dataWarehouseDatabaseName: ${self:provider.stage}-data-warehouse-database
   tableRefresherCrawlerName: ${self:provider.stage}-table-refresher-crawler
@@ -73,6 +74,10 @@ resources:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: ${self:custom.dataWarehouseBucketName}
+    SparkJobs:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.sparkJobsBucketName}
     TableRefresherCrawler:
       Type: AWS::Glue::Crawler
       Properties:

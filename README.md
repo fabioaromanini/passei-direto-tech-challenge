@@ -49,7 +49,7 @@ All logs may be viewed in CloudWatch.
 #### Step 2: Use spark to process site events
 
 - ~~Define a simple Spark job~~
-- Add bucket for storing spark jobs
+- ~~Add bucket for storing spark jobs~~
 - Create an EMR jobflow cluster
 - Add spark jobs deploy to cicd pipeline
 - Point results to data warehouse
