@@ -50,8 +50,8 @@ All logs may be viewed in CloudWatch.
 
 - ~~Define a simple Spark job~~
 - ~~Add bucket for storing spark jobs~~
-- Create an EMR jobflow cluster
 - Add spark jobs deploy to cicd pipeline
+- Create an EMR jobflow cluster
 - Point results to data warehouse
 - Run Glue crawler on data warehouse upload
 - Improve simple Spark job

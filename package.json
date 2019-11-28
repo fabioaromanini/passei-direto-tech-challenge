@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "deploy": "sls deploy -v",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "deploy-spark": "node src/scripts/deploySpark.js"
   },
   "devDependencies": {
     "jest": "^24.9.0",
