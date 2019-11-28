@@ -15,3 +15,7 @@ exports.extractTransformLoad = async event => {
   await datawarehouseService.refreshTables();
   console.log('Crawler triggered');
 };
+
+exports.startEmrJob = async () => {
+  console.log('oi');
+};

@@ -49,6 +49,10 @@ provider:
         - xray:PutTraceSegments
         - xray:PutTelemetryRecords
       Resource: '*'
+    - Effect: Allow
+      Action:
+        - elasticMapReduce:RunJobFlow
+      Resource: '*'
 
 package:
   exclude:
@@ -68,6 +72,10 @@ functions:
     handler: src/handler.extractTransformLoad
     events:
       - sns: ${self:provider.stage}-trigger-etl
+  startEmrJob:
+    handler: src/handler.startEmrJob
+    events:
+      - sns: ${self:provider.stage}-trigger-emr-starter
 
 resources:
   Resources:
