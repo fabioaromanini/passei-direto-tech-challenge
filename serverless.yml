@@ -52,7 +52,8 @@ provider:
 
 package:
   exclude:
-    - test
+    - src/test/**
+    - venv/**
 
 custom:
   dataSourceBucketName: ${env:DATA_SOURCE_BUCKET_NAME, 'mocked.data.source'}
