@@ -57,7 +57,7 @@ package:
 
 custom:
   dataSourceBucketName: ${env:DATA_SOURCE_BUCKET_NAME, 'mocked.data.source'}
-  sparkJobsBucketName: ${self:provider.stage}-spark-jobs
+  sparkJobsBucketName: ${self:provider.stage}-emr-jobs
   dataWarehouseBucketName: ${self:provider.stage}.data.warehouse
   dataWarehouseDatabaseName: ${self:provider.stage}-data-warehouse-database
   tableRefresherCrawlerName: ${self:provider.stage}-table-refresher-crawler
