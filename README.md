@@ -48,8 +48,13 @@ All logs may be viewed in CloudWatch.
 
 #### Step 2: Use spark to process site events
 
-- Define a Spark job
-- Create an EMR step cluster
+- ~~Define a simple Spark job~~
+- Add bucket for storing spark jobs
+- Create an EMR jobflow cluster
+- Add spark jobs deploy to cicd pipeline
+- Point results to data warehouse
+- Run Glue crawler on data warehouse upload
+- Improve simple Spark job
 
 #### ~~Step 1: Load relational data about users into Athena~~
 
