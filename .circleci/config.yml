@@ -37,7 +37,7 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
             - v1-dependencies-
-      - run: npm run deploy-spark
+      - run: npm run deploy-spark -- dev-emr-jobs
       # - run: npm run deploy-spark -- --stage prod
 
 workflows:
