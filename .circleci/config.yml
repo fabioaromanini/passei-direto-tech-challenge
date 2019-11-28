@@ -25,8 +25,7 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
             - v1-dependencies-
-      - run: npm run deploy
-      # - run: npm run deploy -- --stage prod
+      - run: npm run deploy -- --stage prod
 
   deploy-spark:
     docker:
@@ -37,8 +36,7 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
             - v1-dependencies-
-      - run: npm run deploy-spark -- dev-emr-jobs
-      # - run: npm run deploy-spark -- --stage prod
+      - run: npm run deploy-spark -- prod.pdcase.emr.jobs
 
 workflows:
   version: 2
@@ -48,12 +46,12 @@ workflows:
       - deploy:
           requires:
             - build
-          # filters:
-          # branches:
-          #   only: master
+          filters:
+            branches:
+              only: master
       - deploy-spark:
           requires:
             - deploy
-          # filters:
-          #   branches:
-          #     only: master
+          filters:
+            branches:
+              only: master
