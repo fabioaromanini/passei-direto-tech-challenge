@@ -52,7 +52,7 @@ All logs may be viewed in CloudWatch.
 2. ~~Add bucket for storing spark jobs~~
 3. ~~Add spark jobs deploy to cicd pipeline~~
 4. ~~Create an EMR jobflow cluster~~
-5. Create EMR Job Flow Role
+5. ~~Create EMR Cluster Role and Instance Profile~~
 6. Point results to data warehouse
 7. Run Glue crawler on data warehouse upload
 8. Improve simple Spark job
