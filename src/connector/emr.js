@@ -35,6 +35,14 @@ function runJob() {
       LogUri: `s3://${SPARK_JOBS_BUCKET}/logs/`,
       Steps: [
         {
+          Name: 'setup-debugging',
+          ActionOnFailure: 'TERMINATE_CLUSTER',
+          HadoopJarStep: {
+            Jar: `command-runner.jar`,
+            Args: ['state-pusher-script'],
+          },
+        },
+        {
           Name: 'spark-submit',
           ActionOnFailure: 'TERMINATE_CLUSTER',
           HadoopJarStep: {
