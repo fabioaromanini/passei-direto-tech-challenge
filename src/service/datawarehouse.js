@@ -20,7 +20,16 @@ async function load(data) {
 
 const expectedEntitiesByBase = {
   a: ['subscriptions', 'students', 'sessions', 'follows'],
-  b: ['events-by-city', 'events-by-client-type', 'events-by-course', 'events-by-university'],
+  b: [
+    'events',
+    'sessions-by-campaign',
+    'events-by-state',
+    'events-by-pagename',
+    'events-by-city',
+    'events-by-client-type',
+    'events-by-course',
+    'events-by-university',
+  ],
 };
 
 async function refreshTables(key) {
