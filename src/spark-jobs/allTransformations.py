@@ -50,6 +50,11 @@ if __name__ == '__main__':
     students.createOrReplaceTempView('student')
 
     spark.sql('''
+    SELECT *
+    FROM event
+    ''').write.json(output_dir + 'events/', mode='overwrite')
+
+    spark.sql('''
     SELECT city, COUNT(event.at) events
     FROM event
     JOIN student on student.id = event.student_id
