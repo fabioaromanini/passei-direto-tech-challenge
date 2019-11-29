@@ -50,33 +50,47 @@ if __name__ == '__main__':
     students.createOrReplaceTempView('student')
 
     spark.sql('''
-    SELECT student.city, COUNT(event.at) eventos
+    SELECT city, COUNT(event.at) events
     FROM event
     JOIN student on student.id = event.student_id
-    WHERE student.city IS NOT NULL
-    GROUP BY student.city
-    ORDER BY eventos DESC
-    ''').write.json(output_dir + '/events-by-city', mode='overwrite')
+    GROUP BY city
+    ''').write.json(output_dir + 'events-by-city/', mode='overwrite')
 
     spark.sql('''
-    SELECT client_type, COUNT(at) eventos
+    SELECT state, COUNT(event.at) events
+    FROM event
+    JOIN student on student.id = event.student_id
+    GROUP BY state
+    ''').write.json(output_dir + 'events-by-state/', mode='overwrite')
+
+    spark.sql('''
+    SELECT DISTINCT marketing_source, marketing_medium, marketing_campaign, COUNT(*) sessions
+    FROM event
+    GROUP BY marketing_source, marketing_medium, marketing_campaign
+    ''').write.json(output_dir + 'sessions-by-campaign/', mode='overwrite')
+
+    spark.sql('''
+    SELECT page_name, COUNT(*) visits
+    FROM event
+    GROUP BY page_name
+    ''').write.json(output_dir + 'events-by-pagename/', mode='overwrite')
+
+    spark.sql('''
+    SELECT client_type, COUNT(at) events
     FROM event
     GROUP BY client_type
-    ORDER BY eventos DESC
-    ''').write.json(output_dir + '/events-by-client-type', mode='overwrite')
+    ''').write.json(output_dir + 'events-by-client-type/', mode='overwrite')
 
     spark.sql('''
-    SELECT custom_1 universidade, COUNT(at) eventos
+    SELECT custom_1 university, COUNT(at) events
     FROM event
-    GROUP BY universidade
-    ORDER BY eventos DESC
-    ''').write.json(output_dir + '/events-by-university', mode='overwrite')
+    GROUP BY university
+    ''').write.json(output_dir + 'events-by-university/', mode='overwrite')
 
     spark.sql('''
-    SELECT custom_2 curso, COUNT(at) eventos
+    SELECT custom_2 course, COUNT(at) events
     FROM event
-    GROUP BY curso
-    ORDER BY eventos DESC
-    ''').write.json(output_dir + '/events-by-course', mode='overwrite')
+    GROUP BY course
+    ''').write.json(output_dir + 'events-by-course/', mode='overwrite')
 
     spark.stop()
