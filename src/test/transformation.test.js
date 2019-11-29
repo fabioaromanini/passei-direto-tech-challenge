@@ -1,12 +1,12 @@
 const transformationService = require('../service/transformation');
 
-const subjects = require('./data/inputs/subjects.json');
-const student_follow_subject = require('./data/inputs/student_follow_subject.json');
-const students = require('./data/inputs/students.json');
-const universities = require('./data/inputs/universities.json');
-const courses = require('./data/inputs/courses.json');
-const sessions = require('./data/inputs/sessions.json');
-const subscriptions = require('./data/inputs/subscriptions.json');
+const subjects = require('./data/inputs/a/subjects.json');
+const student_follow_subject = require('./data/inputs/a/student_follow_subject.json');
+const students = require('./data/inputs/a/students.json');
+const universities = require('./data/inputs/a/universities.json');
+const courses = require('./data/inputs/a/courses.json');
+const sessions = require('./data/inputs/a/sessions.json');
+const subscriptions = require('./data/inputs/a/subscriptions.json');
 
 const denormalizedStudents = require('./data/outputs/denormalizedStudents.json');
 const denormalizedFollows = require('./data/outputs/denormalizedFollows.json');

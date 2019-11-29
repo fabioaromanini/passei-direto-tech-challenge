@@ -4,14 +4,16 @@ from pyspark.sql.types import StringType
 from random import randint
 from operator import add
 
+stage = 'prod'
+
 if __name__ == '__main__':
     spark = SparkSession.builder.appName('allTransformations').getOrCreate()
 
-    input_dir = 's3n://prod.data.source.pdcase/b/'
-    side_input_dir = 's3n://prod.data.warehouse.pdcase/a/students/'
+    input_dir = f's3n://{stage}.data.source.pdcase/b/'
+    side_input_dir = f's3n://{stage}.data.warehouse.pdcase/a/students/'
     # input_dir = '/home/romanini/workspace/passeidireto/assets/datasets-teste-data-engineer-pd/base_b/'
     # side_input_dir = '/home/romanini/workspace/passeidireto/assets/datasets-teste-data-engineer-pd/base_a/'
-    output_dir = 's3n://prod.data.warehouse.pdcase/b/'
+    output_dir = f's3n://{stage}.data.warehouse.pdcase/b/'
     # output_dir = '/home/romanini/workspace/passeidireto/assets/datasets-teste-data-engineer-pd/base_b/tests/'
     file_name = 'part-*.json'
     side_file_name = '*.json'
