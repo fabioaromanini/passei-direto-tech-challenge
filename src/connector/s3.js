@@ -19,7 +19,7 @@ async function extractEntity(entityName) {
 }
 
 function loadEntity(entityName, data) {
-  const key = `a/${entityName}/${new Date().toISOString()}.json`;
+  const key = `a/${entityName}/${new Date().getTime()}.json`;
   const params = {
     Body: data,
     Bucket: DATA_WAREHOUSE_BUCKET_NAME,
