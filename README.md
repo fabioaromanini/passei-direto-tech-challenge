@@ -52,12 +52,12 @@ Since buckets in AWS require unique global namings, I created every single bucke
 
 #### Data ETL
 
-In order to trigger an extraction from _<stage-name>.data.source.pdcase_ to _<stage-name>.data.warehouse.pdcase_, simply send a message (any message) to a SNS topic called _<stage-name>-prod-trigger-etl_. In a few minutes a will be created in athena with data available for ad-hoc queries.
+In order to trigger an extraction from `<stage-name>.data.source.pdcase` to `<stage-name>.data.warehouse.pdcase`, simply send a message (any message) to a SNS topic called `<stage-name>-prod-trigger-etl`. In a few minutes a will be created in athena with data available for ad-hoc queries.
 All logs may be viewed in CloudWatch.
 
 #### Spark Jobs
 
-In order to trigger a spark job defined you uploaded to _<stage-name>.emr.jobs.pdcase_, simply send a message (any message) to a SNS topic called _<stage-name>-prod-emr-starter_. In a few seconds an EMR cluster with 1 m5.xlarge machine will be created and process data from your datasource/datawarehouse. Once the job is over, it will also create a few tables inside a athena database.
+In order to trigger a spark job defined you uploaded to `<stage-name>.emr.jobs.pdcase`, simply send a message (any message) to a SNS topic called `<stage-name>-prod-emr-starter`. In a few seconds an EMR cluster with 1 m5.xlarge machine will be created and process data from your datasource/datawarehouse. Once the job is over, it will also create a few tables inside a athena database.
 All logs may be viewed in CloudWatch.
 
 ## TODO
