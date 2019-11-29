@@ -81,10 +81,10 @@ package:
     - venv/**
 
 custom:
-  dataSourceBucketName: ${env:DATA_SOURCE_BUCKET_NAME, 'mocked.data.source'}
-  sparkJobsBucketName: ${self:provider.stage}.emr.pdcase.jobs
-  dataWarehouseBucketName: ${self:provider.stage}.data.warehouse
-  dataWarehouseDatabaseName: ${self:provider.stage}-data-warehouse-database
+  dataSourceBucketName: ${self:provider.stage}.data.source.pdcase
+  sparkJobsBucketName: ${self:provider.stage}.emr.jobs.pdcase
+  dataWarehouseBucketName: ${self:provider.stage}.data.warehouse.pdcase
+  dataWarehouseDatabaseName: ${self:provider.stage}-data-warehouse
   tableRefresherCrawlerName: ${self:provider.stage}-table-refresher-crawler
   tableRefresherRoleName: ${self:provider.stage}-table-refresher-crawler-role-${self:provider.region}
 

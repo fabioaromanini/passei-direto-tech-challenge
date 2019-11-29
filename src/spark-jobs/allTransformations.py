@@ -7,11 +7,11 @@ from operator import add
 if __name__ == '__main__':
     spark = SparkSession.builder.appName('allTransformations').getOrCreate()
 
-    input_dir = 's3n://mocked.data.source/b/'
-    side_input_dir = 's3n://dev.data.warehouse/a/students/'
+    input_dir = 's3n://prod.data.source.pdcase/b/'
+    side_input_dir = 's3n://prod.data.warehouse.pdcase/a/students/'
     # input_dir = '/home/romanini/workspace/passeidireto/assets/datasets-teste-data-engineer-pd/base_b/'
     # side_input_dir = '/home/romanini/workspace/passeidireto/assets/datasets-teste-data-engineer-pd/base_a/'
-    output_dir = 's3n://dev.data.warehouse/b/'
+    output_dir = 's3n://prod.data.warehouse.pdcase/b/'
     # output_dir = '/home/romanini/workspace/passeidireto/assets/datasets-teste-data-engineer-pd/base_b/tests/'
     file_name = 'part-*.json'
     side_file_name = '*.json'
