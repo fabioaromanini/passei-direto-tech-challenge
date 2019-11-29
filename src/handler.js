@@ -21,3 +21,7 @@ exports.startEmrJob = async () => {
   await jobService.startJob();
   console.log('EMR Job started');
 };
+
+exports.startTableRefresher = async () => {
+  console.log('Eae');
+};

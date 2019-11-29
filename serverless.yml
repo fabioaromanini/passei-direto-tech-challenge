@@ -88,6 +88,12 @@ functions:
     handler: src/handler.startEmrJob
     events:
       - sns: ${self:provider.stage}-trigger-emr-starter
+  startTableRefresher:
+    handler: src/handler.startTableRefresher
+    events:
+      - s3:
+          bucket: ${self:custom.dataWarehouseBucketName}
+          existing: true
 
 resources:
   Resources:
