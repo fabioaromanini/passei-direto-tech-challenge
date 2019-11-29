@@ -45,19 +45,19 @@ Since buckets in AWS require unique global namings, I created every single bucke
 ## Spark Jobs
 
 1. In order to run spark jobs using EMR, open the file `src/spark-jobs/allTransformations.py` and replace the value in the _stage_ variable in line 7 for the name of your own stage, so that _input_dir_ will match the s3 data warehouse bucket you created with `npm run deploy`.
-2. Run `npm run deploy-spark`. This will update your python file to a bucket called `<stage-name>.emr.jobs.pdcase`. EMR clusters will read from this bucket.
+2. Run `npm run deploy-spark <stage-name>.emr.jobs.pdcase`. This will update your python file to a bucket called `<stage-name>.emr.jobs.pdcase`. EMR clusters will read from this bucket.
 3. Run `npm run deploy-roles`. This will create the IAM Roles for your spark cluster.
 
 ## Trigger
 
 #### Data ETL
 
-In order to trigger an extraction from _<stage-name>.data.source.pdcase_ to _<stage-name>.data.warehouse.pdcase_, simply send a message (any message) to a SNS topic called _<stage-name>-prod-trigger-etl_. In a few minutes a will be created in athena with data available for ad-hoc queries.
+In order to trigger an extraction from `<stage-name>.data.source.pdcase` to `<stage-name>.data.warehouse.pdcase`, simply send a message (any message) to a SNS topic called `<stage-name>-prod-trigger-etl`. In a few minutes a will be created in athena with data available for ad-hoc queries.
 All logs may be viewed in CloudWatch.
 
 #### Spark Jobs
 
-In order to trigger a spark job defined you uploaded to _<stage-name>.emr.jobs.pdcase_, simply send a message (any message) to a SNS topic called _<stage-name>-prod-emr-starter_. In a few seconds an EMR cluster with 1 m5.xlarge machine will be created and process data from your datasource/datawarehouse. Once the job is over, it will also create a few tables inside a athena database.
+In order to trigger a spark job defined you uploaded to `<stage-name>.emr.jobs.pdcase`, simply send a message (any message) to a SNS topic called `<stage-name>-prod-emr-starter`. In a few seconds an EMR cluster with 1 m5.xlarge machine will be created and process data from your datasource/datawarehouse. Once the job is over, it will also create a few tables inside a athena database.
 All logs may be viewed in CloudWatch.
 
 ## TODO
