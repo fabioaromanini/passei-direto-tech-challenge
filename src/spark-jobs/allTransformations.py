@@ -1,5 +1,4 @@
 from pyspark.sql import SparkSession, Row, DataFrame
-from pyspark.sql.functions import udf
 from pyspark.sql.types import StringType
 from random import randint
 from operator import add
@@ -27,56 +26,65 @@ if __name__ == '__main__':
         .withColumnRenamed('Last Accessed Url', 'last_accessed_url') \
         .withColumnRenamed('first-accessed-page', 'first_accessed_page')
 
-    getStudentId = udf(
-        lambda columnValue: (columnValue.split('@')[0]
-                             if type(columnValue) == str
-                             else None),
-        StringType()
-    )
-    getClient = udf(
-        lambda columnValue: (columnValue.split('@')[1]
-                             if type(columnValue) == str
-                             else None),
-        StringType()
-    )
+    events.createOrReplaceTempView('raw_event')
 
-    events = events \
-        .withColumn('student_id', getStudentId(events.studentId_clientType)) \
-        .withColumn('client_type', getClient(events.studentId_clientType))
-
-    events.createOrReplaceTempView('event')
+    spark.sql('''
+    SELECT *,
+        split(studentid_clienttype, '@')[0] student_id,
+        split(studentid_clienttype, '@')[1] client_type
+    FROM raw_event
+    ''').createOrReplaceTempView('event')
 
     students = spark.read.json(side_input_dir + side_file_name)
     students.createOrReplaceTempView('student')
 
     spark.sql('''
-    SELECT student.city, COUNT(event.at) eventos
+    SELECT *
+    FROM event
+    ''').write.json(output_dir + 'events/', mode='overwrite')
+
+    spark.sql('''
+    SELECT city, COUNT(event.at) events
     FROM event
     JOIN student on student.id = event.student_id
-    WHERE student.city IS NOT NULL
-    GROUP BY student.city
-    ORDER BY eventos DESC
-    ''').write.json(output_dir + '/events-by-city', mode='overwrite')
+    GROUP BY city
+    ''').write.json(output_dir + 'events-by-city/', mode='overwrite')
 
     spark.sql('''
-    SELECT client_type, COUNT(at) eventos
+    SELECT state, COUNT(event.at) events
+    FROM event
+    JOIN student on student.id = event.student_id
+    GROUP BY state
+    ''').write.json(output_dir + 'events-by-state/', mode='overwrite')
+
+    spark.sql('''
+    SELECT DISTINCT marketing_source, marketing_medium, marketing_campaign, COUNT(*) sessions
+    FROM event
+    GROUP BY marketing_source, marketing_medium, marketing_campaign
+    ''').write.json(output_dir + 'sessions-by-campaign/', mode='overwrite')
+
+    spark.sql('''
+    SELECT page_name, COUNT(*) visits
+    FROM event
+    GROUP BY page_name
+    ''').write.json(output_dir + 'events-by-pagename/', mode='overwrite')
+
+    spark.sql('''
+    SELECT client_type, COUNT(at) events
     FROM event
     GROUP BY client_type
-    ORDER BY eventos DESC
-    ''').write.json(output_dir + '/events-by-client-type', mode='overwrite')
+    ''').write.json(output_dir + 'events-by-client-type/', mode='overwrite')
 
     spark.sql('''
-    SELECT custom_1 universidade, COUNT(at) eventos
+    SELECT custom_1 university, COUNT(at) events
     FROM event
-    GROUP BY universidade
-    ORDER BY eventos DESC
-    ''').write.json(output_dir + '/events-by-university', mode='overwrite')
+    GROUP BY university
+    ''').write.json(output_dir + 'events-by-university/', mode='overwrite')
 
     spark.sql('''
-    SELECT custom_2 curso, COUNT(at) eventos
+    SELECT custom_2 course, COUNT(at) events
     FROM event
-    GROUP BY curso
-    ORDER BY eventos DESC
-    ''').write.json(output_dir + '/events-by-course', mode='overwrite')
+    GROUP BY course
+    ''').write.json(output_dir + 'events-by-course/', mode='overwrite')
 
     spark.stop()

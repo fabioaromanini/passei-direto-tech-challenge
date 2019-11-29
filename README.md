@@ -58,7 +58,7 @@ All logs may be viewed in CloudWatch.
 #### Spark Jobs
 
 In order to trigger a spark job defined you uploaded to `<stage-name>.emr.jobs.pdcase`, simply send a message (any message) to a SNS topic called `<stage-name>-prod-emr-starter`. In a few seconds an EMR cluster with 1 m5.xlarge machine will be created and process data from your datasource/datawarehouse. Once the job is over, it will also create a few tables inside a athena database.
-All logs may be viewed in CloudWatch.
+Logs will be found on `<stage-name>.emr.jobs.pdcase/logs`.
 
 ## TODO
 
