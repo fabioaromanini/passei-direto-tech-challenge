@@ -18,8 +18,31 @@ async function load(data) {
   );
 }
 
-async function refreshTables() {
-  return glueConnector.startCrawler();
+const expectedEntitiesByBase = {
+  a: ['subscriptions', 'students', 'sessions', 'follows'],
+  b: ['events-by-city', 'events-by-client-type', 'events-by-course', 'events-by-university'],
+};
+
+async function refreshTables(key) {
+  const base = key.split('/')[0];
+
+  const expectedEntities = expectedEntitiesByBase[base];
+  const downloadedEntities = await s3Connector.listEntities(base);
+  const downloadedEntitiesSet = new Set(downloadedEntities);
+
+  const remainingFiles = expectedEntities.filter(entity => !downloadedEntitiesSet.has(entity));
+  console.debug(`remainingFiles: ${remainingFiles}`);
+
+  const downloadAll = remainingFiles.length === 0;
+  if (downloadAll) {
+    try {
+      await glueConnector.startCrawler();
+    } catch (e) {
+      console.warn(`Crawler is already running`);
+      return false;
+    }
+  }
+  return downloadAll;
 }
 
 exports.load = load;

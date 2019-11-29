@@ -12,9 +12,9 @@ async function extractEntity(entityName) {
     Key: key,
   };
 
+  const response = await client.getObject(payload).promise();
   console.debug(`Finished downloading ${key}`);
 
-  const response = await client.getObject(payload).promise();
   return { data: JSON.parse(response.Body.toString()), name: entityName };
 }
 
@@ -31,5 +31,18 @@ function loadEntity(entityName, data) {
   return client.putObject(params).promise();
 }
 
+async function listEntities(base) {
+  const response = await client
+    .listObjectsV2({
+      Bucket: DATA_WAREHOUSE_BUCKET_NAME,
+      Prefix: `${base}/`,
+      Delimiter: '/',
+    })
+    .promise();
+  console.debug(`Finished downloading objects for base ${base}`);
+  return response.CommonPrefixes.map(element => element.Prefix.split('/')[1]);
+}
+
 exports.extractEntity = extractEntity;
 exports.loadEntity = loadEntity;
+exports.listEntities = listEntities;
