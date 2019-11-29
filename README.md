@@ -45,7 +45,7 @@ Since buckets in AWS require unique global namings, I created every single bucke
 ## Spark Jobs
 
 1. In order to run spark jobs using EMR, open the file `src/spark-jobs/allTransformations.py` and replace the value in the _stage_ variable in line 7 for the name of your own stage, so that _input_dir_ will match the s3 data warehouse bucket you created with `npm run deploy`.
-2. Run `npm run deploy-spark`. This will update your python file to a bucket called `<stage-name>.emr.jobs.pdcase`. EMR clusters will read from this bucket.
+2. Run `npm run deploy-spark <stage-name>.emr.jobs.pdcase`. This will update your python file to a bucket called `<stage-name>.emr.jobs.pdcase`. EMR clusters will read from this bucket.
 3. Run `npm run deploy-roles`. This will create the IAM Roles for your spark cluster.
 
 ## Trigger
