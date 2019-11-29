@@ -4,7 +4,7 @@
 
 Repository with code for a technical challenge I'm facing in my job interview for Passei Direto.
 
-The challenge consist of creating a data warehouse from a set of json files, and running some Spark jobs that process data from said data warehouse.
+The challenge consists of creating a data warehouse from a set of JSON files and running some Spark jobs that process data from the warehouse.
 
 ## Requirements
 
@@ -16,9 +16,9 @@ The challenge consist of creating a data warehouse from a set of json files, and
 1. `npm install`
 2. `npm run deploy -- --stage <stage-name>`
 
-Since buckets in AWS require unique global namings, I created every single bucket with a _stage_ prefix. Therefore it is **required** to pass a --stage when deploying. It can be any string you want, just make it short an lowercase only. For example: `npm run deploy -- --stage fabio`
+Since buckets in AWS require unique global namings, I created every single bucket with a _stage_ prefix. Therefore it is **required** to pass a --stage when deploying. It can be any string you want, just make it short a lowercase only. For example: `npm run deploy -- --stage fabio`
 
-3. This project uses CloudFormation for cloud resources management, therefore everything you need to run the pipeline will be created when you execute the npm deploy script.Therefore, once the project insfrastructure is created, you'll end-up with a few s3 buckets. Put the following files in the `<stage-name>.data.source.pdcase`
+3. This project uses CloudFormation for cloud resources management, therefore everything you need to run the pipeline will be created when you execute the npm deploy script. Therefore, once the project infrastructure is created, you'll end-up with a few s3 buckets. Put the following files in the `<stage-name>.data.source.pdcase`
 
 ```
 /
@@ -54,8 +54,12 @@ All logs may be viewed in CloudWatch.
 
 #### Spark Jobs
 
-In order to trigger a spark job defined you uploaded to `<stage-name>.emr.jobs.pdcase`, simply send a message (any message) to a SNS topic called `<stage-name>-prod-emr-starter`. In a few seconds an EMR cluster with 1 m5.xlarge machine will be created and process data from your datasource/datawarehouse. Once the job is over, it will also create a few tables inside a athena database.
+In order to trigger a spark job defined you uploaded to `<stage-name>.emr.jobs.pdcase`, simply send a message (any message) to an SNS topic called `<stage-name>-prod-emr-starter`. In a few seconds an EMR cluster with 1 m5.xlarge machine will be created and process data from your datasource/datawarehouse. Once the job is over, it will also create a few tables in an Athena database.
 Logs will be found on `<stage-name>.emr.jobs.pdcase/logs`.
+
+## Cleaning
+
+If you want to remove the complete stack, start by *removing all content from all the buckets* the project has created. They must be completely empty before proceeding. After doing that, open cloud formation on your console, select the created stack (something like passei-direto-<your-stage-name>). In a few minutes, all the resources will be deleted, and your account is as good as new.
 
 ## TODO
 
@@ -63,8 +67,8 @@ Logs will be found on `<stage-name>.emr.jobs.pdcase/logs`.
 
 1. ~~Define a simple Spark job~~
 2. ~~Add bucket for storing spark jobs~~
-3. ~~Add spark jobs deploy to cicd pipeline~~
-4. ~~Create an EMR jobflow cluster~~
+3. ~~Add spark jobs deploy to ci/cd pipeline~~
+4. ~~Create an EMR job flow cluster~~
 5. ~~Create EMR Cluster Role and Instance Profile~~
 6. ~~Point results to data warehouse~~
 7. ~~Improve simple Spark job~~
