@@ -10,10 +10,21 @@ The challenge consist of creating a data warehouse from a set of json files, and
 
 - Node v12.13.x
 - [AWS Credentials as explained here](https://serverless.com/framework/docs/providers/aws/guide/credentials/)
-- An s3 bucket that acts as a mocked data source with the following files:
+
+## Deploy
+
+1. `npm install`
+2. `npm run deploy --stage <stage-name>`
+
+This project uses CloudFormation for cloud resources management, therefore everything you need to run the pipeline will be created when you execute the npm deploy script.
+
+Since buckets in AWS require unique global namings, I created every single bucket with a _stage_ prefix. Therefore it is **required** to pass a --stage when deploying. It can be any string you want, just make it short an lowercase only. For example:
+`npm run deploy --stage fabio`
+
+3. Once the project insfraestructure is created, you'll end-up with a few s3 buckets. Put the following files in the `<stage-name>.data.source.pdcase`
 
 ```
-root/
+/
   a/
     courses.json
     sessions.json
@@ -22,26 +33,31 @@ root/
     students.json
     student_follow_subject.json
     universities.json
+  b/
+    part-00001.json
+    part-00002.json
+    part-00003.json
+    ...
 ```
 
 - The schemas for each file are described in src/test/data/inputs/. Since the data is proprietary, I will not make it available in this repository, but you can create your own data from the schema I provided.
-- Also, the name of the bucket must be exported as a environment variable named DATA_SOURCE_BUCKET_NAME.
 
-```sh
-export DATA_SOURCE_BUCKET_NAME=<your-data-source-bucket-name>
-```
+## Spark Jobs
 
-## Deploy
-
-1. `npm install`
-2. `npm run deploy --stage <your-name-lowercase-only>`
-
-This project uses CloudFormation for cloud resources management, therefore everything you need to run the pipeline (except for the mocked data source) will be created when you execute `npm run deploy`.
+1. In order to run spark jobs using EMR, open the file `src/spark-jobs/allTransformations.py` and replace the value in the _stage_ variable in line 7 for the name of your own stage, so that _input_dir_ will match the s3 data warehouse bucket you created with `npm run deploy`.
+2. Run `npm run deploy-spark`. This will update your python file to a bucket called `<stage-name>.emr.jobs.pdcase`. EMR clusters will read from this bucket.
+3. Run `npm run deploy-roles`. This will create the IAM Roles for your spark cluster.
 
 ## Trigger
 
-This pipeline is triggered by sending a message in a SNS topic named `dev-trigger-etl`. Once you do it, data will be available in a Athena database called `dev-data-warehouse-database` in a few minutes.
+#### Data ETL
 
+In order to trigger an extraction from _<stage-name>.data.source.pdcase_ to _<stage-name>.data.warehouse.pdcase_, simply send a message (any message) to a SNS topic called _<stage-name>-prod-trigger-etl_. In a few minutes a will be created in athena with data available for ad-hoc queries.
+All logs may be viewed in CloudWatch.
+
+#### Spark Jobs
+
+In order to trigger a spark job defined you uploaded to _<stage-name>.emr.jobs.pdcase_, simply send a message (any message) to a SNS topic called _<stage-name>-prod-emr-starter_. In a few seconds an EMR cluster with 1 m5.xlarge machine will be created and process data from your datasource/datawarehouse. Once the job is over, it will also create a few tables inside a athena database.
 All logs may be viewed in CloudWatch.
 
 ## TODO
