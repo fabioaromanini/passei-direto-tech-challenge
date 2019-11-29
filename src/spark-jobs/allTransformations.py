@@ -1,5 +1,4 @@
 from pyspark.sql import SparkSession, Row, DataFrame
-from pyspark.sql.functions import udf
 from pyspark.sql.types import StringType
 from random import randint
 from operator import add
@@ -27,24 +26,14 @@ if __name__ == '__main__':
         .withColumnRenamed('Last Accessed Url', 'last_accessed_url') \
         .withColumnRenamed('first-accessed-page', 'first_accessed_page')
 
-    getStudentId = udf(
-        lambda columnValue: (columnValue.split('@')[0]
-                             if type(columnValue) == str
-                             else None),
-        StringType()
-    )
-    getClient = udf(
-        lambda columnValue: (columnValue.split('@')[1]
-                             if type(columnValue) == str
-                             else None),
-        StringType()
-    )
+    events.createOrReplaceTempView('raw_event')
 
-    events = events \
-        .withColumn('student_id', getStudentId(events.studentId_clientType)) \
-        .withColumn('client_type', getClient(events.studentId_clientType))
-
-    events.createOrReplaceTempView('event')
+    spark.sql('''
+    SELECT *,
+        split(studentid_clienttype, '@')[0] student_id,
+        split(studentid_clienttype, '@')[1] client_type
+    FROM raw_event
+    ''').createOrReplaceTempView('event')
 
     students = spark.read.json(side_input_dir + side_file_name)
     students.createOrReplaceTempView('student')
