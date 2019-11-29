@@ -16,12 +16,9 @@ The challenge consist of creating a data warehouse from a set of json files, and
 1. `npm install`
 2. `npm run deploy -- --stage <stage-name>`
 
-This project uses CloudFormation for cloud resources management, therefore everything you need to run the pipeline will be created when you execute the npm deploy script.
+Since buckets in AWS require unique global namings, I created every single bucket with a _stage_ prefix. Therefore it is **required** to pass a --stage when deploying. It can be any string you want, just make it short an lowercase only. For example: `npm run deploy -- --stage fabio`
 
-Since buckets in AWS require unique global namings, I created every single bucket with a _stage_ prefix. Therefore it is **required** to pass a --stage when deploying. It can be any string you want, just make it short an lowercase only. For example:
-`npm run deploy --stage fabio`
-
-3. Once the project insfraestructure is created, you'll end-up with a few s3 buckets. Put the following files in the `<stage-name>.data.source.pdcase`
+3. This project uses CloudFormation for cloud resources management, therefore everything you need to run the pipeline will be created when you execute the npm deploy script.Therefore, once the project insfrastructure is created, you'll end-up with a few s3 buckets. Put the following files in the `<stage-name>.data.source.pdcase`
 
 ```
 /
