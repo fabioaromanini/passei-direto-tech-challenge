@@ -110,10 +110,14 @@ resources:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: ${self:custom.dataWarehouseBucketName}
-    SparkJobs:
+    SparkJobsBucket:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: ${self:custom.sparkJobsBucketName}
+    DataSourceBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.dataSourceBucketName}
     TableRefresherCrawler:
       Type: AWS::Glue::Crawler
       Properties:
