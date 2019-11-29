@@ -16,12 +16,19 @@ provider:
     DATA_SOURCE_BUCKET_NAME: ${self:custom.dataSourceBucketName}
     DATA_WAREHOUSE_BUCKET_NAME: ${self:custom.dataWarehouseBucketName}
     TABLE_REFRESHER_CRAWLER_NAME: ${self:custom.tableRefresherCrawlerName}
+    SPARK_JOBS_BUCKET: ${self:custom.sparkJobsBucketName}
+
   iamRoleStatements:
     - Effect: Allow
       Action:
         - s3:PutObject
         - s3:GetObject
+        - s3:ListBucket
       Resource:
+        - Fn::Join:
+            - ''
+            - - 'arn:aws:s3:::'
+              - ${self:custom.dataSourceBucketName}
         - Fn::Join:
             - ''
             - - 'arn:aws:s3:::'
@@ -32,6 +39,10 @@ provider:
             - - 'arn:aws:s3:::'
               - ${self:custom.dataWarehouseBucketName}
               - '/*'
+        - Fn::Join:
+            - ''
+            - - 'arn:aws:s3:::'
+              - ${self:custom.dataWarehouseBucketName}
     - Effect: Allow
       Action:
         - glue:StartCrawler
@@ -49,15 +60,31 @@ provider:
         - xray:PutTraceSegments
         - xray:PutTelemetryRecords
       Resource: '*'
+    - Effect: Allow
+      Action:
+        - elasticMapReduce:RunJobFlow
+      Resource: '*'
+    - Effect: Allow
+      Action:
+        - iam:GetRole
+        - iam:PassRole
+      Resource:
+        - Fn::Join:
+            - ''
+            - - 'arn:aws:iam::'
+              - !Ref AWS::AccountId
+              - ':role/EMR_*'
 
 package:
   exclude:
-    - test
+    - src/test/**
+    - venv/**
 
 custom:
-  dataSourceBucketName: ${env:DATA_SOURCE_BUCKET_NAME, 'mocked.data.source'}
-  dataWarehouseBucketName: ${self:provider.stage}.data.warehouse
-  dataWarehouseDatabaseName: ${self:provider.stage}-data-warehouse-database
+  dataSourceBucketName: ${self:provider.stage}.data.source.pdcase
+  sparkJobsBucketName: ${self:provider.stage}.emr.jobs.pdcase
+  dataWarehouseBucketName: ${self:provider.stage}.data.warehouse.pdcase
+  dataWarehouseDatabaseName: ${self:provider.stage}-data-warehouse
   tableRefresherCrawlerName: ${self:provider.stage}-table-refresher-crawler
   tableRefresherRoleName: ${self:provider.stage}-table-refresher-crawler-role-${self:provider.region}
 
@@ -66,6 +93,16 @@ functions:
     handler: src/handler.extractTransformLoad
     events:
       - sns: ${self:provider.stage}-trigger-etl
+  startEmrJob:
+    handler: src/handler.startEmrJob
+    events:
+      - sns: ${self:provider.stage}-trigger-emr-starter
+  startTableRefresher:
+    handler: src/handler.startTableRefresher
+    events:
+      - s3:
+          bucket: ${self:custom.dataWarehouseBucketName}
+          existing: true
 
 resources:
   Resources:
@@ -73,6 +110,14 @@ resources:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: ${self:custom.dataWarehouseBucketName}
+    SparkJobsBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.sparkJobsBucketName}
+    DataSourceBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.dataSourceBucketName}
     TableRefresherCrawler:
       Type: AWS::Glue::Crawler
       Properties:

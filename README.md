@@ -34,7 +34,7 @@ export DATA_SOURCE_BUCKET_NAME=<your-data-source-bucket-name>
 ## Deploy
 
 1. `npm install`
-2. `npm run deploy --stage <your-name>`
+2. `npm run deploy --stage <your-name-lowercase-only>`
 
 This project uses CloudFormation for cloud resources management, therefore everything you need to run the pipeline (except for the mocked data source) will be created when you execute `npm run deploy`.
 
@@ -46,16 +46,24 @@ All logs may be viewed in CloudWatch.
 
 ## TODO
 
-- Move table definition to CloudFormation
-- Create views?
-- ~~Improve log system~~
-- ~~Enable x-ray~~
+#### Step 2: Use spark to process site events
 
-#### ~~Step 1~~
+1. ~~Define a simple Spark job~~
+2. ~~Add bucket for storing spark jobs~~
+3. ~~Add spark jobs deploy to cicd pipeline~~
+4. ~~Create an EMR jobflow cluster~~
+5. ~~Create EMR Cluster Role and Instance Profile~~
+6. ~~Point results to data warehouse~~
+7. ~~Improve simple Spark job~~
+8. ~~Run Glue crawler on data warehouse upload~~
 
-- ~~Trigger AWS Glue Crawler~~
-- ~~Write data into s3~~
-- ~~Rename fields~~
-- ~~Join students, courses and universities into a single denormalized schema~~
-- ~~Join subjects and follows into a single denormalized schema~~
-- ~~Get data from data source bucket~~
+#### ~~Step 1: Load relational data about users into Athena~~
+
+1. ~~Get data from data source bucket~~
+2. ~~Join subjects and follows into a single denormalized schema~~
+3. ~~Join students, courses and universities into a single denormalized schema~~
+4. ~~Rename fields~~
+5. ~~Write data into s3~~
+6. ~~Trigger AWS Glue Crawler~~
+7. ~~Enable x-ray~~
+8. ~~Improve log system~~

@@ -1,3 +1,6 @@
 node_modules
 .serverless
 coverage
+venv
+spark-warehouse
+.vscode

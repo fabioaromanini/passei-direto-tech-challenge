@@ -27,6 +27,28 @@ jobs:
             - v1-dependencies-
       - run: npm run deploy -- --stage prod
 
+  deploy-spark:
+    docker:
+      - image: circleci/node:12.13
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run: npm run deploy-spark -- prod.emr.pdcase.jobs
+
+  deploy-roles:
+    docker:
+      - image: circleci/node:12.13
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run: npm run deploy-roles
+
 workflows:
   version: 2
   build-and-deploy:
@@ -35,6 +57,18 @@ workflows:
       - deploy:
           requires:
             - build
+          filters:
+            branches:
+              only: master
+      - deploy-spark:
+          requires:
+            - deploy
+          filters:
+            branches:
+              only: master
+      - deploy-roles:
+          requires:
+            - deploy
           filters:
             branches:
               only: master
