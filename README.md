@@ -14,7 +14,7 @@ The challenge consist of creating a data warehouse from a set of json files, and
 ## Deploy
 
 1. `npm install`
-2. `npm run deploy --stage <stage-name>`
+2. `npm run deploy -- --stage <stage-name>`
 
 This project uses CloudFormation for cloud resources management, therefore everything you need to run the pipeline will be created when you execute the npm deploy script.
 
