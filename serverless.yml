@@ -53,6 +53,16 @@ provider:
       Action:
         - elasticMapReduce:RunJobFlow
       Resource: '*'
+    - Effect: Allow
+      Action:
+        - iam:GetRole
+        - iam:PassRole
+      Resource:
+        - Fn::Join:
+            - ''
+            - - 'arn:aws:iam::'
+              - !Ref AWS::AccountId
+              - ':role/EMR_*'
 
 package:
   exclude:
