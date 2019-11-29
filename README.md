@@ -54,7 +54,7 @@ All logs may be viewed in CloudWatch.
 4. ~~Create an EMR jobflow cluster~~
 5. ~~Create EMR Cluster Role and Instance Profile~~
 6. ~~Point results to data warehouse~~
-7. Improve simple Spark job
+7. ~~Improve simple Spark job~~
 8. Run Glue crawler on data warehouse upload
 
 #### ~~Step 1: Load relational data about users into Athena~~
