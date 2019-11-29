@@ -59,7 +59,7 @@ Logs will be found on `<stage-name>.emr.jobs.pdcase/logs`.
 
 ## Cleaning
 
-If you want to remove the complete stack, start by *removing all content from all the buckets* the project has created. They must be completely empty before proceeding. After doing that, open cloud formation on your console, select the created stack (something like passei-direto-<your-stage-name>). In a few minutes, all the resources will be deleted, and your account is as good as new.
+If you want to remove the complete stack, start by *removing all content from all the buckets* the project has created. They must be completely empty before proceeding. After doing that, open cloud formation on your console, select the created stack (something like `passei-direto-<your-stage-name>`). In a few minutes, all the resources will be deleted, and your account is as good as new.
 
 ## TODO
 
