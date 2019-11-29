@@ -48,21 +48,22 @@ All logs may be viewed in CloudWatch.
 
 #### Step 2: Use spark to process site events
 
-- ~~Define a simple Spark job~~
-- ~~Add bucket for storing spark jobs~~
-- ~~Add spark jobs deploy to cicd pipeline~~
-- Create an EMR jobflow cluster
-- Point results to data warehouse
-- Run Glue crawler on data warehouse upload
-- Improve simple Spark job
+1. ~~Define a simple Spark job~~
+2. ~~Add bucket for storing spark jobs~~
+3. ~~Add spark jobs deploy to cicd pipeline~~
+4. ~~Create an EMR jobflow cluster~~
+5. Create EMR Job Flow Role
+6. Point results to data warehouse
+7. Run Glue crawler on data warehouse upload
+8. Improve simple Spark job
 
 #### ~~Step 1: Load relational data about users into Athena~~
 
-- ~~Improve log system~~
-- ~~Enable x-ray~~
-- ~~Trigger AWS Glue Crawler~~
-- ~~Write data into s3~~
-- ~~Rename fields~~
-- ~~Join students, courses and universities into a single denormalized schema~~
-- ~~Join subjects and follows into a single denormalized schema~~
-- ~~Get data from data source bucket~~
+1. ~~Get data from data source bucket~~
+2. ~~Join subjects and follows into a single denormalized schema~~
+3. ~~Join students, courses and universities into a single denormalized schema~~
+4. ~~Rename fields~~
+5. ~~Write data into s3~~
+6. ~~Trigger AWS Glue Crawler~~
+7. ~~Enable x-ray~~
+8. ~~Improve log system~~

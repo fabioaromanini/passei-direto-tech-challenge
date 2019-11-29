@@ -1,6 +1,7 @@
 const sourceService = require('./service/source');
 const transformationService = require('./service/transformation');
 const datawarehouseService = require('./service/datawarehouse');
+const jobService = require('./service/job');
 
 exports.extractTransformLoad = async event => {
   const data = await sourceService.extract();
@@ -17,5 +18,6 @@ exports.extractTransformLoad = async event => {
 };
 
 exports.startEmrJob = async () => {
-  console.log('oi');
+  await jobService.startJob();
+  console.log('EMR Job started');
 };
