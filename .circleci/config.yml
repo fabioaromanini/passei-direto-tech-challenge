@@ -36,7 +36,7 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
             - v1-dependencies-
-      - run: npm run deploy-spark -- prod.emr.pdcase.jobs
+      - run: npm run deploy-spark -- prod.emr.jobs.pdcase
 
   deploy-roles:
     docker:
